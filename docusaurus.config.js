@@ -8,8 +8,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: '东山Π',
-  tagline: 'DshanPI Modbus Docs.',
+  title: '全场景工业互联',
+  tagline: 'Modbus-TrainingDocs',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -75,7 +75,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'eLinux AI开发',
+        title: '全场景工业互联',
         logo: {
           alt: 'DshanPI',
           src: 'img/logo.svg',
@@ -83,10 +83,22 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'linuxuserSidebar',
+            sidebarId: 'modbustrainoneSidebar',
             position: 'left',
-            label: 'Linux手册',
-          },                 
+            label: '全场景工业互联设备管理系统解决方案(PC上位机+中控+多传感器)',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'modbustraintwoSidebar',
+            position: 'left',
+            label: '全场景工业互联设备管理系统解决方案(网络+云服务+GUI)暂为空',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'modbustrainthreeSidebar',
+            position: 'left',
+            label: '全场景工业互联设备管理系统解决方案(Linux))暂为空',
+          },
           {
             type: 'localeDropdown',
             position: 'right',
