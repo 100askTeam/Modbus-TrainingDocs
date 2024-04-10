@@ -1,0 +1,62 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.avaotapiSidebar.category.快速启动": {
+    "message": "快速启动",
+    "description": "The label for category 快速启动 in sidebar avaotapiSidebar"
+  },
+  "sidebar.avaotapiSidebar.category.快速启动.link.generated-index.description": {
+    "message": "5 minutes to learn the most important Docusaurus concepts.",
+    "description": "The generated-index page description for category 快速启动 in sidebar avaotapiSidebar"
+  },
+  "sidebar.avaotapiSidebar.category.系统体验": {
+    "message": "系统体验",
+    "description": "The label for category 系统体验 in sidebar avaotapiSidebar"
+  },
+  "sidebar.avaotapiSidebar.category.系统体验.link.generated-index.description": {
+    "message": "5 minutes to learn the most important Docusaurus concepts.",
+    "description": "The generated-index page description for category 系统体验 in sidebar avaotapiSidebar"
+  },
+  "sidebar.linuxuserSidebar.category.快速启动": {
+    "message": "快速启动",
+    "description": "The label for category 快速启动 in sidebar linuxuserSidebar"
+  },
+  "sidebar.linuxuserSidebar.category.快速启动.link.generated-index.description": {
+    "message": "5 minutes to learn the most important Docusaurus concepts.",
+    "description": "The generated-index page description for category 快速启动 in sidebar linuxuserSidebar"
+  },
+  "sidebar.linuxapiSidebar.category.快速启动": {
+    "message": "快速启动",
+    "description": "The label for category 快速启动 in sidebar linuxapiSidebar"
+  },
+  "sidebar.linuxapiSidebar.category.快速启动.link.generated-index.description": {
+    "message": "5 minutes to learn the most important Docusaurus concepts.",
+    "description": "The generated-index page description for category 快速启动 in sidebar linuxapiSidebar"
+  },
+  "sidebar.linuxapiSidebar.category.系统体验": {
+    "message": "系统体验",
+    "description": "The label for category 系统体验 in sidebar linuxapiSidebar"
+  },
+  "sidebar.linuxapiSidebar.category.系统体验.link.generated-index.description": {
+    "message": "5 minutes to learn the most important Docusaurus concepts.",
+    "description": "The generated-index page description for category 系统体验 in sidebar linuxapiSidebar"
+  },
+  "sidebar.tinalinuxSidebar.category.快速启动": {
+    "message": "快速启动",
+    "description": "The label for category 快速启动 in sidebar tinalinuxSidebar"
+  },
+  "sidebar.tinalinuxSidebar.category.快速启动.link.generated-index.description": {
+    "message": "5 minutes to learn the most important Docusaurus concepts.",
+    "description": "The generated-index page description for category 快速启动 in sidebar tinalinuxSidebar"
+  },
+  "sidebar.mainlinelinuxSidebar.category.快速启动": {
+    "message": "快速启动",
+    "description": "The label for category 快速启动 in sidebar mainlinelinuxSidebar"
+  },
+  "sidebar.mainlinelinuxSidebar.category.快速启动.link.generated-index.description": {
+    "message": "5 minutes to learn the most important Docusaurus concepts.",
+    "description": "The generated-index page description for category 快速启动 in sidebar mainlinelinuxSidebar"
+  }
+}

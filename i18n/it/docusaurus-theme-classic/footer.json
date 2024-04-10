@@ -1,0 +1,74 @@
+{
+  "link.title.Docs": {
+    "message": "Docs",
+    "description": "The title of the footer links column with title=Docs in the footer"
+  },
+  "link.title.Community": {
+    "message": "Community",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.More": {
+    "message": "More",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "link.item.label.DongshanPI": {
+    "message": "DongshanPI",
+    "description": "The label of footer link with label=DongshanPI linking to https://dongshanpi.com"
+  },
+  "link.item.label.Canaan-Docs": {
+    "message": "Canaan-Docs",
+    "description": "The label of footer link with label=Canaan-Docs linking to https://canaan-docs.100ask.net/"
+  },
+  "link.item.label.Renesas-Docs": {
+    "message": "Renesas-Docs",
+    "description": "The label of footer link with label=Renesas-Docs linking to https://renesas-docs.100ask.net/"
+  },
+  "link.item.label.RTOS": {
+    "message": "RTOS",
+    "description": "The label of footer link with label=RTOS linking to https://rtos.100ask.net/"
+  },
+  "link.item.label.TinaSDK-Docs": {
+    "message": "TinaSDK-Docs",
+    "description": "The label of footer link with label=TinaSDK-Docs linking to https://tina.100ask.net/"
+  },
+  "link.item.label.Allwinner-Docs": {
+    "message": "Allwinner-Docs",
+    "description": "The label of footer link with label=Allwinner-Docs linking to https://allwinner-docs.100ask.net/"
+  },
+  "link.item.label.R128-Docs": {
+    "message": "R128-Docs",
+    "description": "The label of footer link with label=R128-Docs linking to https://aw-r128.100ask.net/"
+  },
+  "link.item.label.BiliBili": {
+    "message": "BiliBili",
+    "description": "The label of footer link with label=BiliBili linking to https://space.bilibili.com/275908810"
+  },
+  "link.item.label.Stack Overflow": {
+    "message": "Stack Overflow",
+    "description": "The label of footer link with label=Stack Overflow linking to https://forums.100ask.net"
+  },
+  "link.item.label.VideoCenter": {
+    "message": "VideoCenter",
+    "description": "The label of footer link with label=VideoCenter linking to https://video.100ask.net/"
+  },
+  "link.item.label.Twitter": {
+    "message": "Twitter",
+    "description": "The label of footer link with label=Twitter linking to https://twitter.com/dongshanpi"
+  },
+  "link.item.label.Coding": {
+    "message": "Coding",
+    "description": "The label of footer link with label=Coding linking to https://weidongshan.coding.net/public/"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/100askTeam"
+  },
+  "link.item.label.Gitee": {
+    "message": "Gitee",
+    "description": "The label of footer link with label=Gitee linking to https://gitee.com/weidongshan"
+  },
+  "copyright": {
+    "message": "Copyright © 2024 100askTeam, Inc. Built with Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

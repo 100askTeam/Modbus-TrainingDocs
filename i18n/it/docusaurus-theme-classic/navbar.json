@@ -1,0 +1,34 @@
+{
+  "title": {
+    "message": "Avaota SBC文档",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "AvaotaPI",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Avaota SBC": {
+    "message": "Avaota SBC",
+    "description": "Navbar item with label Avaota SBC"
+  },
+  "item.label.Linux手册": {
+    "message": "Linux手册",
+    "description": "Navbar item with label Linux手册"
+  },
+  "item.label.Linux-API": {
+    "message": "Linux-API",
+    "description": "Navbar item with label Linux-API"
+  },
+  "item.label.Tina Linux": {
+    "message": "Tina Linux",
+    "description": "Navbar item with label Tina Linux"
+  },
+  "item.label.Linux 主线": {
+    "message": "Linux 主线",
+    "description": "Navbar item with label Linux 主线"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
