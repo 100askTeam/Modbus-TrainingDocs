@@ -75,7 +75,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: '全场景工业互联',
+        title: '工业互联',
         logo: {
           alt: 'DshanPI',
           src: 'img/logo.svg',
@@ -85,19 +85,19 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'modbustrainoneSidebar',
             position: 'left',
-            label: '全场景工业互联设备管理系统解决方案(PC上位机+中控+多传感器)',
+            label: '项目一',
           },
           {
             type: 'docSidebar',
             sidebarId: 'modbustraintwoSidebar',
             position: 'left',
-            label: '全场景工业互联设备管理系统解决方案(网络+云服务+GUI)暂为空',
+            label: '项目二',
           },
           {
             type: 'docSidebar',
             sidebarId: 'modbustrainthreeSidebar',
             position: 'left',
-            label: '全场景工业互联设备管理系统解决方案(Linux))暂为空',
+            label: '项目三',
           },
           {
             type: 'localeDropdown',
