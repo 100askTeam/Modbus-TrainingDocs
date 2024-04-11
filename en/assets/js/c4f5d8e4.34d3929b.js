@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[195],{2841:(e,t,s)=>{s.r(t),s.d(t,{default:()=>c});s(7294);var u=s(6550),r=s(5893);function c(){return(0,r.jsx)(u.l_,{to:"Modbus-projectOne/chapter1"})}}}]);
