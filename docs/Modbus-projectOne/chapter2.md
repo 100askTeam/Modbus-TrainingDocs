@@ -91,13 +91,15 @@ Keil 只是一个开发工具，它里面有一些芯片的软件包；但是它
 
 ![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image17.png)
 
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image18.png)
+
 下载之前会弹出 Pack 用户协议， 点击“Accept”即可：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image18.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image19.png)
 
 下载完成得到“Keil.STM32H5xx_DFP.1.2.0.pack”，直接双击该文件，随后弹出如 图所示界面，点击“Next”进行安装。
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image19.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image20.png)
 
 ## 1.4 安装 STM32CubeMX
 
@@ -107,15 +109,17 @@ STM32CubeMX 是 ST 意法半导体推出的 STM32 系列芯片可视化的图形
 
 在开发板配套资料里，有 STM32CubeMX 的安装软件：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image20.png) 
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image21.png) 
 
 也可以从 ST 官网（https://www.st.com/zh/development-tools/stm32cubemx.html） 下载 STM32CubeMX。
 
 解压安装包后， 即可安装，如下图所示：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image21.png)
-
 ![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image22.png)
+
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image23.png)
+
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image24.png)
 
 ## 1.5 安装 STM32CubeProgrammer
 
@@ -123,23 +127,23 @@ STM32CubeProgrammer 是烧写工具，用户可以通过此工具使用 ST-Link�
 
 开发板配套的资料里有安装软件：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image23.png) 
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image25.png) 
 
 也可以从 ST 官网（https://www.st.com/zh/development-tools/stm32cubeprog.html） 下载。
 
 把软件包解压后即可安装，安装步骤如下面的组图所示：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image24.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image26.png)
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image25.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image27.png)
 
 在安装 STM32CubeProgrammer 过程中会弹出安装 ST-Link 驱动，根据提示点击下一页 或者完成即可：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image26.png)	 
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image28.png)	 
 
 最后等待安装完成即可：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image27.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image29.png)
 
 ## 1.6 安装 ST-Link 驱动
 
@@ -147,32 +151,32 @@ STM32CubeProgrammer 是烧写工具，用户可以通过此工具使用 ST-Link�
 
 在开发板配套资料里有该驱动：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image28.png) 
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image30.png) 
 
 解压“en.stsw-link009.zip”，双击运行“dpinst_amd64.exe”（如果电脑为 32 位 系统， 运行“dpinst_x86.exe”） ，出现如图所示安装界面，点击“下一步”。
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image29.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image31.png)
 
 在安装过程中， 出现如图所示的 Windows 安全警告，选择“安装”
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image30.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image32.png)
 
 最后安装完成提示如图所示， 点击“完成”退出安装程序。
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image31.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image33.png)
 
 ## 1.7 安装 CH340 驱动
 
 在开发板配套资料中，有如下安装包：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image32.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image34.png)
 
  
 
 双击运行， 直接点击“安装”即可：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image33.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image35.png)
 
 安装成功会有提示：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image34.png)
+![](http://photos.100ask.net/modbus-docs/project_one/chapter2/image36.png)
