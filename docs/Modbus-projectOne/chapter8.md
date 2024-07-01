@@ -393,9 +393,7 @@ for (int i = 0; i < 2; i++)
 详解如下：
 
 -  发送测量命令：传感器的 VDD 上电后需等待 5ms， 发送写测量命令 0x70 0xAC 0x330x00， 等待 80ms 测量完成；
-
 -  获取温湿度校准数据： 在等待 80ms 测量完成后， 发送 0x71 读传感器，可获取状态字 Status、温湿度校准数据 SRH[19:0]、ST[19:0]以及校准字 CRC；
-
 - 根据公式计算温湿度：
 
 ![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image33.png) 
@@ -441,3 +439,230 @@ HAL_StatusTypeDef HAL_I2C_Master_Transmit(I2C_HandleTypeDef *hi2c, uint16_t DevA
 
 HAL_StatusTypeDef HAL_I2C_Master_Receive(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout) ;
 ```
+
+## 7.7 访问多个传感器
+
+如下图连线，H5控制板使用USB线供电，中间的HUB也使用USB供电：
+
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image35.png) 
+
+连接示意图为：
+
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image36.png) 
+
+**注意**：三个传感器的启动开关都拨到“ON”位置。
+
+### 7.7.1 主控访问多个传感器
+
+本节源码为“3_程序源码\01_视频配套的源码\7-12_主控访问多个传感器\h5_demo、f030_demo”。
+
+注意：f030_demo需要分别设置下面的宏（这3个宏同一时间只能定义一个），编译出程序后分别烧写到3个传感器里。
+
+```c
+#define USE_SWITCH_SENSOR 1
+#define USE_ENV_MONITOR_SENSOR 1
+#define USE_TMP_HUMI_SENSOR 1
+```
+
+编写H5主控程序，为每个485通道创建一个任务，任务里创建modbus结构体：
+
+- 任务1：使用CH1，访问开关量传感器、环境监测传感器，在LCD上显示数据
+- 任务2：使用CH2，访问温湿度传感器，在LCD上显示数据
+
+注意：因为任务1、任务2都访问LCD，在LCD函数里要加入互斥措施，否则LCD会花屏。
+
+### 7.7.2 上位机访问多个传感器
+
+本节源码为“3_程序源码\01_视频配套的源码\7-13 上位机访问多个传感器\h5_demo、f030_demo”。
+
+注意：f030_demo需要分别设置下面的宏（这3个宏同一时间只能定义一个），编译出程序后分别烧写到3个传感器里。
+
+```c
+#define USE_SWITCH_SENSOR 1
+#define USE_ENV_MONITOR_SENSOR 1
+#define USE_TMP_HUMI_SENSOR 1
+```
+
+在上位机的角度，它只看到H5主控板一个Modbus设备。上位机怎么去访问接在H5上的其他3个传感器？这里需要进行“映射”：上位机读写H5的某个寄存器，其实是去读写某个传感器。
+
+本节使用一个固定的映射点表，如下：
+
+| H5设备地址 | H5寄存器地址 | H5寄存器类别     | 映射                               | 用途                        | 描述     |
+| ---------- | ------------ | ---------------- | ---------------------------------- | --------------------------- | -------- |
+| 01H        | 0000H        | DI               | CH1ID=1DI寄存器0                   | 读取开关量传感器的按键KEY1  | 1-被按下 |
+| 0001H      | DI           | CH1ID=1DI寄存器1 | 读取开关量传感器的按键KEY2         | 1-被按下                    |          |
+| 0002H      | DI           | CH1ID=1DI寄存器2 | 读取开关量传感器的按键KEY3         | 1-被按下                    |          |
+| 0000H      | DO           | H5的LED          | 控制H5的LED                        | 1-亮                        |          |
+| 0001H      | DO           | CH1ID=1DO寄存器0 | 控制开关量传感器的继电器1          | 1-吸合                      |          |
+| 0002H      | DO           | CH1ID=1DO寄存器1 | 控制开关量传感器的继电器2          | 1-吸合                      |          |
+| 0003H      | DO           | CH1ID=1DO寄存器2 | 控制开关量传感器的LED1             | 1-亮                        |          |
+| 0004H      | DO           | CH1ID=1DO寄存器3 | 控制开关量传感器的LED2             | 1-亮                        |          |
+| 0005H      | DO           | CH1ID=1DO寄存器4 | 控制开关量传感器的LED3             | 1-亮                        |          |
+| 0006H      | DO           | CH1ID=2DO寄存器0 | 控制环境监测传感器的蜂鸣器1        | 1-响                        |          |
+| 0007H      | DO           | CH1ID=2DO寄存器1 | 控制环境监测传感器的蜂鸣器2        | 1-响                        |          |
+| 0008H      | DO           | CH1ID=2DO寄存器2 | 控制环境监测传感器的LED1           | 1-亮                        |          |
+| 0009H      | DO           | CH1ID=2DO寄存器3 | 控制环境监测传感器的LED2           | 1-亮                        |          |
+| 000AH      | DO           | CH1ID=2DO寄存器4 | 控制环境监测传感器的LED3           | 1-亮                        |          |
+| 000BH      | DO           | CH2ID=3DO寄存器0 | 控制温湿度传感器的蜂鸣器1          | 1-响                        |          |
+| 000CH      | DO           | CH2ID=3DO寄存器1 | 控制温湿度传感器的蜂鸣器2          | 1-响                        |          |
+| 000DH      | DO           | CH2ID=3DO寄存器2 | 控制温湿度传感器的LED1             | 1-亮                        |          |
+| 000EH      | DO           | CH2ID=3DO寄存器3 | 控制温湿度传感器的LED2             | 1-亮                        |          |
+| 000FH      | DO           | CH2ID=3DO寄存器4 | 控制温湿度传感器的LED3             | 1-亮                        |          |
+| 0000H      | AI           | CH1ID=2AI寄存器0 | 读取环境监测传感器的光敏电压       | 0xfff对应3.3V12位精度       |          |
+| 0001H      | AI           | CH1ID=2AI寄存器1 | 读取环境监测传感器的可调电阻器电压 | 0xfff对应3.3V12位精度       |          |
+| 0002H      | AI           | CH2ID=3AI寄存器0 | 读取温湿度传感器的温度             | 单位0.1摄氏度16位有符号整数 |          |
+| 0003H      | AI           | CH2ID=3AI寄存器1 | 读取温湿度传感器的湿度             | 单位0.1%RH16位有符合整数    |          |
+
+编写H5主控程序：
+
+- 任务1：创建一个Modbus设备，分配modbus_mapping_t，读取PC发来的请求并进行回应
+- 任务2：使用CH1访问开关量传感器（ID=1），在modbus_mapping_t和传感器之间传递数据。
+- 任务3：使用CH1访问环境监测传感器（ID=2），在modbus_mapping_t和传感器之间传递数据。
+- 任务4：使用CH2访问温湿度传感器（ID=3），在modbus_mapping_t和传感器之间传递数据。
+
+程序框图如下图所示：
+
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image37.png) 
+
+## 7.8 程序改进
+
+### 7.8.1 主控UART代码的更好封装
+
+本节源码为“3_程序源码\01_视频配套的源码\7-14_主控UART代码的更好封装\h5_demo、f030_demo”。
+
+对于同一款芯片上面的多个UART，它们的操作代码是类似的，没有必要为各个UART单独提供函数，如下代码有改进空间：
+
+```c
+struct UART_Device g_uart2_dev = {"uart2", UART2_Rx_Start, UART2_Send, UART2_GetData, UART2_Flush};
+struct UART_Device g_uart4_dev = {"uart4", UART4_Rx_Start, UART4_Send, UART4_GetData, UART4_Flush};
+```
+
+以UART2_Rx_Start、UART4_Rx_Start为例，它们的代码如下：
+
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image38.png) 
+
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image39.png) 
+
+它们的功能是类似的，可以使用同一套函数UART_Rx_Start，关键是：
+
+- 如何分辨它要操作哪个UART？只能在第1个参数里进行分辨
+- 如何记录创建的队列、信号量？最好存在第1个参数里
+
+所以，需要对UART_Device结构体进行扩展，添加“私有数据”，如下：
+
+```c
+typedef struct UART_Device {
+      char *name;
+      int (*Init)( struct UART_Device *pDev, int baud, char parity, int data_bit, int stop_bit);
+      int (*Send)( struct UART_Device *pDev, uint8_t *datas, uint32_t len, int timeout);
+      int (*RecvByte)( struct UART_Device *pDev, uint8_t *data, int timeout);
+      int (*Flush)(struct UART_Device *pDev);
+      void *priv_data;
+}UART_Device, *PUART_Device;
+```
+
+上述“priv_data”将指向设备相关的结构体，比如：
+
+```c
+#define RX_BUF_LEN 1000
+typedef struct UART_Data {
+
+      UART_HandleTypeDef *huart;
+      SemaphoreHandle_t txSemaphore;
+      QueueHandle_t rxQueue;
+      uint8_t rx_buf[RX_BUF_LEN];
+
+}UART_Data, *PUART_Data;
+
+static struct UART_Data g_uart1_data = {
+      &huart1,
+};
+
+static struct UART_Data g_uart2_data = {
+      &huart2,
+};
+
+static struct UART_Data g_uart4_data = {
+      &huart4,
+};
+```
+
+然后，就可以如此实现函数了：
+
+```C
+UART_Device g_uart1_dev = {"uart1", UART_Rx_Start, UART_Send, UART_GetData, UART_Flush, &g_uart1_data};
+UART_Device g_uart2_dev = {"uart2", UART_Rx_Start, UART_Send, UART_GetData, UART_Flush, &g_uart2_data};
+UART_Device g_uart4_dev = {"uart4", UART_Rx_Start, UART_Send, UART_GetData, UART_Flush, &g_uart4_data};
+
+int UART_Rx_Start(PUART_Device pDev, int baud, char parity, int data_bit, int stop_bit)
+{
+    PUART_Data data = pDev->priv_data;
+      
+	if (!data->rxQueue)
+      {
+		data->rxQueue = xQueueCreate(200, 1);
+		data->txSemaphore = xSemaphoreCreateBinary();
+		
+		HAL_UARTEx_ReceiveToIdle_DMA(data->huart, data->rx_buf, RX_BUF_LEN);
+		//HAL_UARTEx_ReceiveToIdle_IT(data->huart, data->rx_buf, 1);
+      }
+      return 0;
+}
+```
+
+### 7.8.2 增加容错代码
+
+本节源码为“3_程序源码\01_视频配套的源码\7-15_增加容错代码\h5_demo、f030_demo”。
+
+#### **1. 添加UART错误恢复代码**
+
+无论是主控程序还是传感器程序，使用UART进行数据传输是本项目的关键。如果发生了UART错误，应该能从错误中恢复。
+
+在错误中断回调函数里，重新初始化UART、重新启动数据接收，代码如下：
+
+```C
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+      PUART_Data data = NULL;
+
+      if (huart == &huart1)
+      {
+        data = &g_uart1_data;
+      }
+
+      if (huart == &huart2)
+      {
+        data = &g_uart2_data;
+      }
+
+      if (huart == &huart4)
+      {
+        data = &g_uart4_data;
+      }
+
+      if (data)
+      {
+        HAL_UART_DeInit(data->huart);
+        HAL_UART_Init(data->huart);
+	
+        /* re-start DMA+IDLE rx */
+        HAL_UARTEx_ReceiveToIdle_DMA(data->huart, data->rx_buf, RX_BUF_LEN);
+        //HAL_UARTEx_ReceiveToIdle_IT(data->huart, data->rx_buf, 1);
+      }
+}
+```
+
+#### **2. 调整libmodbus的超时时间**
+
+如下修改“Middlewares\Third_Party\libmodbus\modbus-private.h”：
+
+```C
+#define _RESPONSE_TIMEOUT 10000
+#define _BYTE_TIMEOUT   10000
+```
+
+#### **3. 主控发出libmodbus请求的间隔加大**
+
+获得锁之后，等待一会再发送Modbus请求，以便让从机超时退出并进入新一轮的等待：
+
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image40.png) 
