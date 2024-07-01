@@ -116,31 +116,31 @@ USB 默认只为开发板提供供电， 将来我们会将它作为串口进行
 
 启动 STM32CubeMX 后， 点击如下图标开始选择 MCU：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image18.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image17.png) 
 
 如下图输入型号“STM32H563RIV”，双击找到的芯片，开始创建工程：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image19.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image18.png) 
 
 在弹出的窗口， 选择“without TurstZone activated”：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image20.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image19.png) 
 
 调高 CPU 频率：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image21.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image20.png) 
 
 配置工程， 如下操作：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image22.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image21.png) 
 
 指定代码生成方法， 如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image23.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image22.png) 
 
 在弹出的窗口， 点击“Yes”（以后再使能 ICACHE）：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image24.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image23.png) 
 
 ### 2.3.2 选择调试器
 
@@ -152,15 +152,15 @@ USB 默认只为开发板提供供电， 将来我们会将它作为串口进行
 
 根据核心板原理图“项目 1-全场景工业互联设备管理系统解决方案(PC 上位机+中控+ 多传感器)5_硬件资料01_开发板原理图DshanMCU-LiteH5_SCH_V1.pdf”， 可以看到 LED 引脚图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image25.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image24.png) 
 
 可以双击打开工程里如下文件进行配置：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image26.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image25.png) 
 
 然后如下配置 PC12 为输出引脚：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image27.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image26.png) 
 
 - 在 main 函数的循环里，增加如下代码：
 
@@ -193,7 +193,7 @@ USB 默认只为开发板提供供电， 将来我们会将它作为串口进行
 
 在上 一 个程序的基础上配 置 SPI 。 在 底 板 原 理 图 “ 100ASK_MCU-Industrial- DevKit_SCH_V1.pdf”中可以看到 SPI LCD 的接口信息：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image29.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image27.png) 
 
 所涉及引脚列表如下：
 
@@ -213,25 +213,25 @@ USB 默认只为开发板提供供电， 将来我们会将它作为串口进行
 
 #### 1. SPI2 参数配置
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image30.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image28.png) 
 
 #### 2.SPI2 GPIO 配置
 
 SPI LCD 的 SPI 频率很高， 所涉及的 SPI 引脚速率都要配置为“very high”， 如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image31.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image29.png) 
 
 #### 3. 其他引脚配置
 
 如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image32.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image30.png) 
 
 #### 4. 修改堆的大小
 
 要使用“Draw_ChineseFont”显示汉字，需要把堆调大（因为里面使用到 malloc 函数 分配比较大的内存） ，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image33.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image31.png) 
 
 ### 2.4.3 添加驱动
 
@@ -239,11 +239,11 @@ SPI LCD 的 SPI 频率很高， 所涉及的 SPI 引脚速率都要配置为“v
 
 然后在 MDK-ARM 工程里添加 group、文件，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image34.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image32.png) 
 
 最后添加头文件目录，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image35.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image33.png) 
 
 ### 2.4.4 添加代码
 
@@ -471,11 +471,11 @@ void Draw_Picture(uint32_t x, uint32_t y, const uint8_t *pic);
 
 使用这个函数的前提是： 先使用"取字模软件.EXE"生成点阵,存入 font_chinese.c 的 CnChar32x29 数组中。这个工具在“4_工具软件9_文字取模软件”目录里，操作示意图如 下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image48.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image34.png) 
 
 复制出来的点阵数据，存入 font_chinese.c 的 CnChar32x29 数组中， 如下添加索引：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image49.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image35.png) 
 
 以后， 就可以使用如下代码显示汉字了：
 
@@ -509,11 +509,11 @@ void Draw_Picture(uint32_t x, uint32_t y, const uint8_t *pic);
 
 使用这个函数的前提是： 先使用"Image2Lcd"生成图片的点阵,存入 picture.c 中。这 个工具在“4_工具软件\10_图片点阵生成工具”目录里，操作示意图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image53.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image36.png) 
 
 打开生成的文件，把它的代码全部复制进 picture.c 里， 示例如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image54.png)  
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image37.png)  
 
 以后， 就可以使用如下代码显示图片了：
 
@@ -530,19 +530,19 @@ void Draw_Picture(uint32_t x, uint32_t y, const uint8_t *pic);
 
 打开工程的 STM32CubeMX 配置，如下使能 FreeRTOS：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image56.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image38.png) 
 
 ### 2.5.2 配置 FreeRTOS
 
 如下配置：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image57.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image39.png) 
 
 使用 FreeRTOS 时， 它的时钟基准来之 SysTick 定时器； HAL 库的时钟基准建议更好为
 
 其他定时器，如下修改（TIMER6、TIMER7 是功能最弱的基础定时器， 可以选择它们）：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image58.png) 
+![img](http://photos.100ask.net/modbus-docs/project_one/chapter3/image40.png) 
 
 ### 2.5.3 添加用户代码
 
