@@ -8,15 +8,15 @@ sidebar_position: 8
 
 我们的 Modbus 传感器开发套件共有三个， 三个板子的使用的主控方案是 STM32F030芯片，硬件接口资源如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image1.png) 
+![img](pic/chapter8/image1.png) 
 
 开关量模块
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image2.png) 
+![img](pic/chapter8/image2.png) 
 
 温湿度变送器模块
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image3.png) 
+![img](pic/chapter8/image3.png) 
 
 环境检测模块
 
@@ -28,27 +28,27 @@ sidebar_position: 8
 
 - 第一种方法：双击运行开发板配套资料中的 Pack 安装包，随后弹出安装界面，按照默 认选项进行安装即可。：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image4.png) 
+![img](pic/chapter8/image4.png) 
 
 - 第二种方法，在线安装， 下面演示如何在线安装。
 
 打开Keil之后， 点击如下按钮启动“Pack Installer”：
 
-![](http://photos.100ask.net/modbus-docs/project_one/chapter8/image5.png)
+![](pic/chapter8/image5.png)
 
 使用 “Pack Installer” 可 以 方 便 的 对 Pack 安 装 和 管 理 。 在 左 上 角 搜 索 框 输 入 “STM32F030”，展开搜索结果，可以看到STM32F030CC，点击右边的简介链接即可跳转 到Pack下载页面，如下图所示。
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image6.png) 
+![img](pic/chapter8/image6.png) 
 
 如果跳转网页无法打开，可直接打开 Pack 下载总入口（www.keil.com/dd2/Pack/）。 进入 Pack 下载总入口后，搜索“STM32F030”，找到“STM030CCT”点击, 如下图所示（实 测部分网络环境打开该链接无 Pack 列表，请尝试换个网络环境测试，仍旧不行则使用配 套资料 Pack）。 
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image7.png) 
+![img](pic/chapter8/image7.png) 
 
 点击会跳转到 pack 包界面，点击右上角的”STM32F0xxDFP“即可跳转到 pack 包下载界面，点击右上角”STM32F0xxDFP“处即可下载 pack 包，如下图所示。
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image8.png) 
+![img](pic/chapter8/image8.png) 
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image9.png)
+![img](pic/chapter8/image9.png)
 
 下载完成得到“Keil.STM32F0xx_DFP.2.1.1.pack”，直接双击该文件，随后弹出安装界 面，按照默认选项进行安装即可。
 
@@ -58,23 +58,23 @@ sidebar_position: 8
 
 启动 STM32CubeMX 后，点击如下图标开始选择 MCU：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image10.png) 
+![img](pic/chapter8/image10.png) 
 
 如下图输入型号“STM32F030CCT”，双击找到的芯片， 开始创建工程：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image11.png) 
+![img](pic/chapter8/image11.png) 
 
 调高 CPU 频率：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image12.png) 
+![img](pic/chapter8/image12.png) 
 
 配置工程， 如下操作：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image13.png) 
+![img](pic/chapter8/image13.png) 
 
 指定代码生成方法， 如下： 
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image14.png) 
+![img](pic/chapter8/image14.png) 
 
 ### 7.3.2 配置调试器
 
@@ -88,15 +88,15 @@ sidebar_position: 8
 
 根据开发板原理图可以看到 F030的LED 引脚图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image15.png) 
+![img](pic/chapter8/image15.png) 
 
 可以双击打开工程中如下文件进入STM32CubeMX进行配置： 
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image16.png) 
+![img](pic/chapter8/image16.png) 
 
 然后如下配置 PB11 、PB12 、PB13 为输出引脚：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image17.png) 
+![img](pic/chapter8/image17.png) 
 
 点击右上角的 “GENERATE CODE”按钮后打开工程。
 
@@ -130,7 +130,7 @@ while (1)
 
 本节源码为“3_程序源码\01_视频配套的源码\7-5_STM32F030串口编程\demo”。 RS4385接口原理图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image18.png) 
+![img](pic/chapter8/image18.png) 
 
 需要在STM32CubeMX里配置UART1，并且配置PA8为输出引脚。
 
@@ -138,11 +138,11 @@ while (1)
 
 先使能 UART1：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image19.png) 
+![img](pic/chapter8/image19.png) 
 
  然后使能中断：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image20.png) 
+![img](pic/chapter8/image20.png) 
 
  在前面STM32H5的UART程序里使用了DMA，本节故意不使用DMA而使用纯中断来 实现UART，多学一种编程方法。
 
@@ -150,11 +150,11 @@ while (1)
 
 STM32H5主控板上使用的RS485转换芯片是MAX13487EESA，它会自动切换发送、 接收方向，无需程序进行方向的控制。使用STM32F030制作的“廉价传感器”里，使用 的RS485转换芯片是SIT3088ETK，它需要使用一个GPIO来控制方向，如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image21.png) 
+![img](pic/chapter8/image21.png) 
 
 上图中，RS485_CTRL使用的引脚是PA8，所以还需要把它配置为输出引脚，输出低 电平（让SIT3088ETK默认为接收状态） 。如下配置：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image22.png) 
+![img](pic/chapter8/image22.png) 
 
 ### 7.4.2 封装 UART
 
@@ -172,7 +172,7 @@ STM32H5主控板上使用的RS485转换芯片是MAX13487EESA，它会自动切�
 
 #### 1. 硬件连接
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image23.png) 
+![img](pic/chapter8/image23.png) 
 
 #### 2. STM32H5 程序改造
 
@@ -192,7 +192,7 @@ STM32H5主控板上使用的RS485转换芯片是MAX13487EESA，它会自动切�
 
 在Keil工程中添加代码， 如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image24.png) 
+![img](pic/chapter8/image24.png) 
 
 ###  7.5.2 使用 modbus 控制设备
 
@@ -216,7 +216,7 @@ STM32F030作为从设备（sever），编写“Core\Src\freertos.c”：
 
 这 3 款传感器的原理图在网盘如下目录里：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image25.png) 
+![img](pic/chapter8/image25.png) 
 
 它们控制外设所用的引脚，列表如下：
 
@@ -323,7 +323,7 @@ AI、DI、DO、AO 都是英文名称的首字母缩写，A 的英文全称 Analo
 
 继电器原理图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image26.png) 
+![img](pic/chapter8/image26.png) 
 
 继电器对外的信号有 3 个：
 
@@ -341,11 +341,11 @@ AI、DI、DO、AO 都是英文名称的首字母缩写，A 的英文全称 Analo
 
 光敏电路如下， 光照越强，U6 阻值越低，OPTO_ADC 电压值就越低：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image27.png) 
+![img](pic/chapter8/image27.png) 
 
 可调电阻器如下，R33 阻值越大，RES_ADC 电压值越小：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image28.png) 
+![img](pic/chapter8/image28.png) 
 
  本节源码为“3_ 程序源码\01_ 视频配套的源码\7-10_ 环境监测传感器程序设计 \f030_demo”。
 
@@ -353,7 +353,7 @@ AI、DI、DO、AO 都是英文名称的首字母缩写，A 的英文全称 Analo
 
 先在STM32CubmeMX里配置GPIO和ADC 引脚，使能“Discontinuous Conversion Mode ”：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image29.png) 
+![img](pic/chapter8/image29.png) 
 
 #### 3. 读取 ADC 的关键代码
 
@@ -380,15 +380,15 @@ for (int i = 0; i < 2; i++)
 
 原理图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image30.png) 
+![img](pic/chapter8/image30.png) 
 
  AHT20 芯片资料在网盘如下目录：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image31.png) 
+![img](pic/chapter8/image31.png) 
 
  AHT20 操作方法如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image32.png) 
+![img](pic/chapter8/image32.png) 
 
 详解如下：
 
@@ -396,7 +396,7 @@ for (int i = 0; i < 2; i++)
 -  获取温湿度校准数据： 在等待 80ms 测量完成后， 发送 0x71 读传感器，可获取状态字 Status、温湿度校准数据 SRH[19:0]、ST[19:0]以及校准字 CRC；
 - 根据公式计算温湿度：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image33.png) 
+![img](pic/chapter8/image33.png) 
 
  计算检验码的函数如下：
 
@@ -428,7 +428,7 @@ unsigned char Calc_CRC8(unsigned char *message,unsigned char Num)
 
 #### 2. 配置 I2C
 
- ![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image34.png) 
+ ![img](pic/chapter8/image34.png) 
 
 #### 3. 读取温湿度关键代码
 
@@ -444,11 +444,11 @@ HAL_StatusTypeDef HAL_I2C_Master_Receive(I2C_HandleTypeDef *hi2c, uint16_t DevAd
 
 如下图连线，H5控制板使用USB线供电，中间的HUB也使用USB供电：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image35.png) 
+![img](pic/chapter8/image35.png) 
 
 连接示意图为：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image36.png) 
+![img](pic/chapter8/image36.png) 
 
 **注意**：三个传感器的启动开关都拨到“ON”位置。
 
@@ -522,7 +522,7 @@ HAL_StatusTypeDef HAL_I2C_Master_Receive(I2C_HandleTypeDef *hi2c, uint16_t DevAd
 
 程序框图如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image37.png) 
+![img](pic/chapter8/image37.png) 
 
 ## 7.8 程序改进
 
@@ -539,9 +539,9 @@ struct UART_Device g_uart4_dev = {"uart4", UART4_Rx_Start, UART4_Send, UART4_Get
 
 以UART2_Rx_Start、UART4_Rx_Start为例，它们的代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image38.png) 
+![img](pic/chapter8/image38.png) 
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image39.png) 
+![img](pic/chapter8/image39.png) 
 
 它们的功能是类似的，可以使用同一套函数UART_Rx_Start，关键是：
 
@@ -665,4 +665,4 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 
 获得锁之后，等待一会再发送Modbus请求，以便让从机超时退出并进入新一轮的等待：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter8/image40.png) 
+![img](pic/chapter8/image40.png) 

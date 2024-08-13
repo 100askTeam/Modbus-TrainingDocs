@@ -16,11 +16,11 @@ libmodbus是一个免费的跨平台支持RTU和TCP的Modbus库，遵循LGPL V2.
 
 libmodbus的源码不断更新，本教程选择版本v3.1.10。打开https://github.com/stephane/libmodbus/tags ，如下图下载：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image1.png) 
+![img](pic/chapter7/image1.png) 
 
 本源码也放在网盘中如下目录里：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image2.png) 
+![img](pic/chapter7/image2.png) 
 
 解压后，简单查看源代码根目录的构成：
 
@@ -31,13 +31,13 @@ libmodbus的源码不断更新，本教程选择版本v3.1.10。打开https://gi
 
 **图6-2解压libmodbus源代码：**
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image3.png) 
+![img](pic/chapter7/image3.png) 
 
 进一步展开src代码目录，如图6-3所示：
 
 **图6-3libmodbus源码构成：**
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image4.png) 
+![img](pic/chapter7/image4.png) 
 
 各文件作用如下：
 
@@ -63,27 +63,27 @@ libmodbus的源码不断更新，本教程选择版本v3.1.10。打开https://gi
 
 运行source Insight，点击菜单“Project->New Project”,如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image5.png) 
+![img](pic/chapter7/image5.png) 
 
 设置工程名及工程数据目录：在弹出的New Project对话框中设置“New project name”(项目的名称)，然后设置Where do you want to store the project data file? (项目文件保存位置)，点击Browse按钮选择源码的目录即可，如下图:
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image6.png) 
+![img](pic/chapter7/image6.png) 
 
 指定源码目录：在上图界面中点击OK后，弹出如下图所示窗口，填入源码路径：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image7.png) 
+![img](pic/chapter7/image7.png) 
 
 添加源码：在新弹出的对话框中，点击“Add”或“Add All”。“Add”是手动选择需要添加的文件，而“Add All”是添加所有文件。我们使用“Add All”,在弹出的提示框中选中“Recursively add lower sub-directories”(递归添加下级的子目录)并点击OK。同样的Remove File,Remove All是移除单个文件或者移除所有文件，如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image8.png) 
+![img](pic/chapter7/image8.png) 
 
 添加文件完成后会弹出下面窗口，点击“确定”即可：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image9.png) 
+![img](pic/chapter7/image9.png) 
 
 此时界面会返回到主界面，如下图所示，点击“Close”：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image10.png) 
+![img](pic/chapter7/image10.png) 
 
 #### 2. 同步文件
 
@@ -91,31 +91,31 @@ libmodbus的源码不断更新，本教程选择版本v3.1.10。打开https://gi
 
 先点击菜单“Project->Synchronize Files”，如图 2.23所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image11.png) 
+![img](pic/chapter7/image11.png) 
 
 在弹出的对话框中 选中“Force all files to be re-parsed”(强制解析所有文件)，并点击“Start”按钮开始同步，如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image12.png) 
+![img](pic/chapter7/image12.png) 
 
 #### 3.打开工程
 
 前面建议工程后，就会自动打开了工程。如果下次你想打开工程，启动Souce Insight后，点击菜单“Project -> Open Porject”就可以在一个列表中选择以前建立的工程，如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image13.png) 
+![img](pic/chapter7/image13.png) 
 
 #### 4. 操作示例
 
 在工程中打开文件：点击"P"图标打开文件列表，双击文件打开文件，也可以输入文件名查找文件，如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image14.png) 
+![img](pic/chapter7/image14.png) 
 
 在文件中查看函数或变量的定义：打开文件后，按住ctrl键的同时，用鼠标点击函数、变量，就会跳到定义它的位置，如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image15.png) 
+![img](pic/chapter7/image15.png) 
 
 查找函数或变量的引用：右键点击函数或变量，弹出对话框选择“Lookup Reference”；或者双击函数后，使用快捷键"ctrl+/"来查找引用，如下图：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image16.png) 
+![img](pic/chapter7/image16.png) 
 
 #### 5. 快捷键
 
@@ -134,7 +134,7 @@ libmodbus是一个免费的跨平台支持RTU和TCP的Modbus开发库，借助�
 
 **图6-4应用程序与libmodbus的关系：**
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image17.png) 
+![img](pic/chapter7/image17.png) 
 
 在对libmodbus的接口及代码框架简单了解之后，不妨再深入细节一探究竟，看看libmodbus都实现了哪些基础功能，以及源代码中对Modbus各功能码和消息顿是如何包装的。具体内容请参看下一章。
 
@@ -152,11 +152,11 @@ libmodbus作为一个优秀且免费开源的跨平台支持RTU和TCP模式的Mo
 
 如下图所示：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image18.png) 
+![img](pic/chapter7/image18.png) 
 
 分析“libmodbus-3.1.10\tests\unit-test-client.c”、“libmodbus-3.1.10\tests\unit-test-server.c”，可以得到下面核心函数的使用过程：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image19.png) 
+![img](pic/chapter7/image19.png) 
 
 ### 6.2.2 框架分析与数据结构
 
@@ -166,11 +166,11 @@ libmodbus作为一个优秀且免费开源的跨平台支持RTU和TCP模式的Mo
 - Modbus核心层：向上提供接口函数，向下调用底层代码构造数据包并发送、接收数据包并解析
 - 后端（数据传输）：进行硬件相关的数据封包与发送、接收与解包
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image20.png) 
+![img](pic/chapter7/image20.png) 
 
 对于核心层、后端，抽象出了如下结构体：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image21.png) 
+![img](pic/chapter7/image21.png) 
 
 核心层modbus_t结构体的成员含义如下：
 
@@ -216,7 +216,7 @@ libmodbus作为一个优秀且免费开源的跨平台支持RTU和TCP模式的Mo
 
 以“modbus_write_bits”函数为例，分析下图的执行流程：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image22.png) 
+![img](pic/chapter7/image22.png) 
 
 #### 1. 初始化
 
@@ -463,7 +463,7 @@ modbus_free(ctx);
 
 **用法举例:**
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image23.png)
+![img](pic/chapter7/image23.png)
 
 ```c
 modbust * ctx;
@@ -505,7 +505,7 @@ modbus_free(ctx);
 
 **图6-6函数 modbus_read input_registers()的调用依赖关系**：
 
-  ![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image24.png)
+  ![img](pic/chapter7/image24.png)
 
 **MODBUS_API int modbus_write_bit (modbus_t \* ctx, int coil_addr, int status)：**
 
@@ -704,7 +704,7 @@ if (modbus connect(ctx)==-1)
 
 根据下图的层次，要移植libmodbus的“后端”，就是构造自己的modbus_backend_t结构体：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image25.png) 
+![img](pic/chapter7/image25.png) 
 
 后端modbus_backend_t结构体的成员含义如下：
 
@@ -735,27 +735,27 @@ if (modbus connect(ctx)==-1)
 
 根据这个源码：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image26.png) 
+![img](pic/chapter7/image26.png) 
 
 改出：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image27.png) 
+![img](pic/chapter7/image27.png) 
 
 ### 6.3.2 使用USB串口作为后端
 
 基于这2个程序：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image28.png) 
+![img](pic/chapter7/image28.png) 
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image29.png) 
+![img](pic/chapter7/image29.png) 
 
 第1步：合并上述2个源码，并修改到能编译成功（但是libmodbus里对USB串口的操作），结果放在如下目录：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image30.png) 
+![img](pic/chapter7/image30.png) 
 
 第2步，继续修改上图的代码，实现USB串口作为后端，得到以下代码：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image31.png) 
+![img](pic/chapter7/image31.png) 
 
 USB串口的操作函数：
 
@@ -775,7 +775,7 @@ int ux_device_cdc_acm_getchar(uint8_t *pData, uint32_t timeout);
 
 本节源码为：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image32.png) 
+![img](pic/chapter7/image32.png) 
 
 参考“libmodbus-3.1.10\tests\unit-test-server.c”，把开发板当做从机，使用PC上Modbus Poll软件读写开发板：控制LED。
 
@@ -787,7 +787,7 @@ int ux_device_cdc_acm_getchar(uint8_t *pData, uint32_t timeout);
 
 本节源码为：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image33.png) 
+![img](pic/chapter7/image33.png) 
 
 参考“libmodbus-3.1.10\tests\unit-test-client.c”，把开发板当做主机，去读写PC上Modbus Slave软件模拟的从机。
 
@@ -797,11 +797,11 @@ int ux_device_cdc_acm_getchar(uint8_t *pData, uint32_t timeout);
 
 本节代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image34.png) 
+![img](pic/chapter7/image34.png) 
 
 按照下图连线：调试、供电、两个485互连，使用CH1（左边的RS485接口）作为主设备，访问CH2（右边的RS485接口）：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image35.png) 
+![img](pic/chapter7/image35.png) 
 
 #### 1. 使用UART_Device
 
@@ -816,17 +816,17 @@ int ux_device_cdc_acm_getchar(uint8_t *pData, uint32_t timeout);
 
 - 使能DMA通道：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image36.png) 
+![img](pic/chapter7/image36.png) 
 
 - 各个DMA通道的配置如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image37.png) 
+![img](pic/chapter7/image37.png) 
 
 #### 2. 用作后端
 
 把UART2、UART4用作libmodbus后端时，只需要修改这几个函数即可：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image38.png) 
+![img](pic/chapter7/image38.png) 
 
 有两个UART_Device，调用哪个UART_Device？在使用“modbus_new_st_rtu”创建modbus_t时，根据传入的设备名在modbus_t结构体里记录对应的UART_Device。_modbus_rtu_connect、_modbus_rtu_send、_modbus_rtu_recv这三个函数，就可以直接调用modbus_t结构体里的UART_Device函数了。
 
@@ -834,11 +834,11 @@ int ux_device_cdc_acm_getchar(uint8_t *pData, uint32_t timeout);
 
 本节源码为：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image39.png) 
+![img](pic/chapter7/image39.png) 
 
 按照下图连线：调试、供电、两个485互连：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter7/image40.png) 
+![img](pic/chapter7/image40.png) 
 
 创建一个ClientTask，使用CH2（右边的RS485接口）对外通信。
 

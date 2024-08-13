@@ -8,23 +8,23 @@ sidebar_position: 11
 
 使用USB串口时，PC上如果中途关闭再打开串口，则开发板无法继续上报数据。解决方法为：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter11/image1.png) 
+![img](pic/chapter11/image1.png) 
 
 #### **2. USB串口数据丢失**
 
 buffer不够大
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter11/image2.png) 
+![img](pic/chapter11/image2.png) 
 
 #### **3. STM32 DMA接收回调函数**
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter11/image3.png) 
+![img](pic/chapter11/image3.png) 
 
 #### **4. c++创建线程使用局部变量**
 
 后台程序里创建线程时，使用局部变量。当创建函数退出后，局部变量被释放，线程有时候能运行，有时候崩溃。
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter11/image4.png) 
+![img](pic/chapter11/image4.png) 
 
 #### **5. libmodbus使用DMA串口时超时时间的设置**
 

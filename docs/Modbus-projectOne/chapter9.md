@@ -14,7 +14,7 @@ OTA是Over-the-Air的简写，即空中下载技术，通过移动通信网络�
 
 下图中，OTA终端和OTA云端交互，下载到固件，然后烧录：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image1.png) 
+![img](pic/chapter9/image1.png) 
 
 IAP是“In Application Programming”的简写，就是用户程序运行时对Flash的某些区域进行烧写，可以写入新版本的软件、用户数据等。IAP主要包括BootLoader和应用程序两部分：在升级时运行的是Bootloader，它接收新版本的应用程序，烧写在Flash上。
 
@@ -30,13 +30,13 @@ IAP是“In Application Programming”的简写，就是用户程序运行时对
 
 在阿里云物联网平台，可以购买OTA服务：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image2.png) 
+![img](pic/chapter9/image2.png) 
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image3.png) 
+![img](pic/chapter9/image3.png) 
 
 它的OTA升级流程如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image4.png) 
+![img](pic/chapter9/image4.png) 
 
 在项目2里才讲解MQTT协议，所以我们暂时不深究OTA技术。
 
@@ -44,7 +44,7 @@ IAP是“In Application Programming”的简写，就是用户程序运行时对
 
 在Linux系统中，软件组成可以跟Windows进行类比：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image5.png) 
+![img](pic/chapter9/image5.png) 
 
 BootLoader的主要作用是：
 
@@ -61,7 +61,7 @@ BootLoader的主要作用是：
 
 所以在单片机中，涉及软件升级时，必须引入BootLoader：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image6.png) 
+![img](pic/chapter9/image6.png) 
 
 Flash上烧写有BootLoader和APP(用户程序)，启动过程如下：
 
@@ -77,14 +77,14 @@ Flash上烧写有BootLoader和APP(用户程序)，启动过程如下：
 
 上位机与下位机使用USB串口相连：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image7.png) 
+![img](pic/chapter9/image7.png) 
 
 上位机使用sscom串口调试助手发送固件，如下图（数据定义后面再设计）：
 
 - 先发送文件信息
 - 再发送文件
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image8.png) 
+![img](pic/chapter9/image8.png) 
 
 下位机：等待文件信息、读取上位机发来的数据、烧写。
 
@@ -96,13 +96,13 @@ STM32H563RIV内置2MB Flash，划分如下：
 - APP占据1784KB空间
 - 配置信息占据最后一个扇区8KB空间：用来保存APP版本、大小、校验码等信息。
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image9.png) 
+![img](pic/chapter9/image9.png) 
 
 #### **3. 下位机启动流程**
 
 Bootloader流程图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image10.png) 
+![img](pic/chapter9/image10.png) 
 
 ### 8.2.2 必备知识
 
@@ -114,7 +114,7 @@ Bootloader流程图如下：
 - CPU读取异常向量表第1个word（4字节），写入SP寄存器
 - CPU读取异常向量表第2个word（4字节），跳转执行：这就是CPU运行的第1个指令
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image11.png) 
+![img](pic/chapter9/image11.png) 
 
 #### **2. 异常向量表**
 
@@ -125,7 +125,7 @@ Bootloader流程图如下：
 
 以SysTick中断为例，SysTick中断发生时，硬件会调用如下函数：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image12.png) 
+![img](pic/chapter9/image12.png) 
 
 能正确使用中断的前提是：
 
@@ -142,7 +142,7 @@ Bootloader流程图如下：
 - R14：别名LR(Link Register)，用来保存返回地址
 - R15：别名PC(Program Counter)，程序计数器，表示当前指令地址，写入新值即可跳转
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image13.png) 
+![img](pic/chapter9/image13.png) 
 
 #### **3. 几条汇编**
 
@@ -195,11 +195,11 @@ BX R1   ; 先在R1里保存地址再跳转
 
 - 设置RO地址为0x08040000：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image14.png) 
+![img](pic/chapter9/image14.png) 
 
 - 不要使用默认的异常向量表：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image15.png) 
+![img](pic/chapter9/image15.png) 
 
 ### 8.2.4 编写Bootloader实现启动功能
 
@@ -212,19 +212,19 @@ Bootloader要启动APP，需要模仿硬件上电后做的事情：
 
 为了使用新的异常向量表，Bootloader还要设置VTOR寄存器为新的异常向量表。参考《ARM Cortex-M3与Cortex-M4权威指南.pdf》，如下图：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image16.png) 
+![img](pic/chapter9/image16.png) 
 
 并且，APP里不应该再设置VTOR：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image17.png) 
+![img](pic/chapter9/image17.png) 
 
 我们使用STM32CubeMX创建工程时经常看到如下警告：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image18.png) 
+![img](pic/chapter9/image18.png) 
 
 如果不想看到上述警告，可以使能ICACHE，如下操作：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image19.png) 
+![img](pic/chapter9/image19.png) 
 
 但是！注意！！Bootloader和APP，只能让一个程序使能ICACHE。如果两个程序都使能ICACHE的话，APP再次初始化ICACHE时会导致死机。
 
@@ -266,7 +266,7 @@ struct FirmwareInfo {
 
 在keil里添加用户命令生成bin文件后，可以使用这个工具生成固件信息：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image20.png) 
+![img](pic/chapter9/image20.png) 
 
 它的用法为（尖括号表示的参数是不可省略的，中括号表示的参数可以省略，version是整数）：
 
@@ -280,7 +280,7 @@ create_firmware_info.exe  <bin_file>  <version>   [load_addr]
 
 把“create_firmware_info.exe”复制到bin文件目录下，然后在命令行执行如下命令：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image21.png) 
+![img](pic/chapter9/image21.png) 
 
 ### 8.2.6 编写Bootloader实现下载功能
 
@@ -288,13 +288,13 @@ create_firmware_info.exe  <bin_file>  <version>   [load_addr]
 
 它由这2个程序合并、修改得到：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image22.png) 
+![img](pic/chapter9/image22.png) 
 
 上机实验：
 
 - 生成h5_app.bin后，制作固件信息，在串口工具中粘贴待用：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image24.png) 
+![img](pic/chapter9/image24.png) 
 
 - 烧写h5_bootloader_download程序
 - 观察串口工具，接收到“1”字符时，点击“发送”：发送固件信息
@@ -488,7 +488,7 @@ int main(void)
 
 - 生成h5_app.bin后，制作固件信息，在串口工具中粘贴待用：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image24.png) 
+![img](pic/chapter9/image24.png) 
 
 - 烧写h5_bootloader_ok程序
 - 观察串口工具，接收到“1”字符时，点击“发送”：发送固件信息
@@ -497,12 +497,12 @@ int main(void)
 - 观察串口工具，可以看到“start app”，并且看到LED闪烁
 - 修改h5_app，让LED闪烁更快，重新编译：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image25.png) 
+![img](pic/chapter9/image25.png) 
 
 - 重新制作固件信息，在串口里粘贴待用：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image26.png) 
+![img](pic/chapter9/image26.png) 
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter9/image27.png) 
+![img](pic/chapter9/image27.png) 
 
 - 手工复位开发板（一定要手工复位），重复步骤③④，可以观察到烧录成功后，程序被启动（LED闪烁更快）。

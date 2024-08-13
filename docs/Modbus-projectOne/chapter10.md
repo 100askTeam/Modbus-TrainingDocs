@@ -10,7 +10,7 @@ sidebar_position: 10
 
 ### 9.1.1 硬件框架
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image1.png) 
+![img](pic/chapter10/image1.png) 
 
 ### 9.1.2 设计思路
 
@@ -43,11 +43,11 @@ Modbus里有“Write File Record”功能，可以使用它来发送大量数据
 
 #### **5. 上位机界面**
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image2.png) 
+![img](pic/chapter10/image2.png) 
 
 ### 9.1.3 软件框架
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image3.png) 
+![img](pic/chapter10/image3.png) 
 
 ## 9.2 改造libmodbus实现文件传输
 
@@ -62,7 +62,7 @@ Modbus里有“Write File Record”功能，可以使用它来发送大量数据
 
 “Write File Record”的请求格式如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image4.png) 
+![img](pic/chapter10/image4.png) 
 
 “Write File Record”的回应跟请求包一模一样。
 
@@ -82,7 +82,7 @@ Modbus里有“Write File Record”功能，可以使用它来发送大量数据
 
 按照下图连线：调试、供电、两个485互连：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image5.png) 
+![img](pic/chapter10/image5.png) 
 
 ### 9.2.3 UART驱动严重Bug
 
@@ -94,7 +94,7 @@ Modbus里有“Write File Record”功能，可以使用它来发送大量数据
 
 正确的“HAL_UARTEx_RxEventCallback”函数代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image6.png) 
+![img](pic/chapter10/image6.png) 
 
 ```c
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
@@ -132,7 +132,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 
 当使用libmodbus时，有两个超时时间需要仔细考虑（Middlewares\Third_Party\libmodbus\modbus-private.h）：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image7.png) 
+![img](pic/chapter10/image7.png) 
 
 “_RESPONSE_TIMEOUT”是“等待回应的时间”：client给server发出请求后，client要等待server发出的回应，这个等待时间要设置得比较大，以便server有足够的时间处理数据并发出回应。
 
@@ -144,7 +144,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 
 修改后的代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image8.png) 
+![img](pic/chapter10/image8.png) 
 
 ### 9.2.4 实现文件传输
 
@@ -178,11 +178,11 @@ typedef struct FileInfo {
 
 如下图连线，H5控制板使用USB线供电，中间的HUB也使用USB供电：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image9.png) 
+![img](pic/chapter10/image9.png) 
 
 连接示意图为：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image10.png) 
+![img](pic/chapter10/image10.png) 
 
 **注意**：三个传感器的启动开关都拨到“ON”位置。
 
@@ -204,17 +204,17 @@ typedef struct FileInfo {
 
 先启动上位机：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image11.png) 
+![img](pic/chapter10/image11.png) 
 
 再增加、设置“点”。
 
 比如要操作接在CH2上的温湿度传感器的蜂鸣器1，如下设置：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image12.png) 
+![img](pic/chapter10/image12.png) 
 
 比如要操作中控（H5开发板自带的LED），如下设置：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image13.png) 
+![img](pic/chapter10/image13.png) 
 
 **注意**：
 
@@ -223,7 +223,7 @@ typedef struct FileInfo {
 
 最后就可以读写点了，比如：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image14.png) 
+![img](pic/chapter10/image14.png) 
 
 ### 9.3.2 使用“点”的映射表操作任意传感器的原理
 
@@ -272,7 +272,7 @@ typedef struct PointMap {
   - 根据映射表，读取channel 2的传感器，更新DI/DO/AI/AO寄存器
   - 当映射表里channel 2对应的DO/AO寄存器发生变化时，用来设置对应的传感器
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image15.png) 
+![img](pic/chapter10/image15.png) 
 
 ### 9.3.3 中控代码讲解
 
@@ -289,7 +289,7 @@ typedef struct PointMap {
 
 代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image16.png) 
+![img](pic/chapter10/image16.png) 
 
 #### **2. CH0_Task任务**
 
@@ -300,7 +300,7 @@ typedef struct PointMap {
 
 代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image17.png) 
+![img](pic/chapter10/image17.png) 
 
 #### **3. CH1_Task、CH2_Task任务**
 
@@ -311,13 +311,13 @@ typedef struct PointMap {
 
 代码如下（以CH1_Task为例）：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image18.png) 
+![img](pic/chapter10/image18.png) 
 
 #### **3. loop_once函数**
 
 它是CH0_Task、CH1_Task、CH2_Task的主要函数，代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image19.png) 
+![img](pic/chapter10/image19.png) 
 
 ## 9.4 IAP升级
 
@@ -329,11 +329,11 @@ IAP是In Application Programming的首字母缩写，IAP是用户自己的程序
 
 如下图连线，H5控制板使用USB线供电，中间的HUB也使用USB供电：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image20.png) 
+![img](pic/chapter10/image20.png) 
 
 连接示意图为：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image21.png) 
+![img](pic/chapter10/image21.png) 
 
 **注意**：三个传感器的启动开关都拨到“ON”位置。
 
@@ -343,7 +343,7 @@ IAP是In Application Programming的首字母缩写，IAP是用户自己的程序
 
 注意：H5的BootLoader和APP是同一套代码，需要指定不同的ROM地址，如下设置即为Bootloader。
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image22.png) 
+![img](pic/chapter10/image22.png) 
 
 #### **3. 烧写传感器Bootloader程序**
 
@@ -353,7 +353,7 @@ IAP是In Application Programming的首字母缩写，IAP是用户自己的程序
 
 先如下设置ROM地址：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image23.png) 
+![img](pic/chapter10/image23.png) 
 
 注意：f030_iap需要分别设置下面的宏（这3个宏同一时间只能定义一个），编译出程序后分别烧写到3个传感器里。
 
@@ -371,13 +371,13 @@ IAP是In Application Programming的首字母缩写，IAP是用户自己的程序
 
 可以使用如下目录有事先编译好的APP：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image24.png) 
+![img](pic/chapter10/image24.png) 
 
 也可以自己编译。工程为“3_程序源码\01_视频配套的源码\9-4-1_IAP升级上机演示\02_中控程序\h5_iap.7z”。
 
 注意：H5的BootLoader和APP是同一套代码，需要指定不同的ROM地址，如下设置即为APP。
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image25.png) 
+![img](pic/chapter10/image25.png) 
 
 编译得到bin文件：demo_h5_app.bin。
 
@@ -387,7 +387,7 @@ IAP是In Application Programming的首字母缩写，IAP是用户自己的程序
 
 可以使用如下目录有事先编译好的APP：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image26.png) 
+![img](pic/chapter10/image26.png) 
 
 也可以自己编译。工程为“3_程序源码\01_视频配套的源码\9-4-1_IAP升级上机演示\03_传感器程序\f030_iap.7z”。
 
@@ -395,7 +395,7 @@ IAP是In Application Programming的首字母缩写，IAP是用户自己的程序
 
 先如下设置ROM地址：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image27.png) 
+![img](pic/chapter10/image27.png) 
 
 注意：f030_iap需要分别设置下面的宏（这3个宏同一时间只能定义一个），编译出程序后分别烧写到3个传感器里。
 
@@ -421,15 +421,15 @@ demo_f030_app_ch2_dev3_temp_humi.bin
 
 先启动上位机：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image28.png) 
+![img](pic/chapter10/image28.png) 
 
 在界面上如下操作：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image29.png) 
+![img](pic/chapter10/image29.png) 
 
 在上位机界面，可以看到升级进度：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image30.png) 
+![img](pic/chapter10/image30.png) 
 
 在中控的LCD屏幕，在升级过程中显示“Bootloader”，升级完成后显示“Application”。
 
@@ -439,15 +439,15 @@ demo_f030_app_ch2_dev3_temp_humi.bin
 
 先启动上位机：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image31.png) 
+![img](pic/chapter10/image31.png) 
 
 在界面上如下操作：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image32.png) 
+![img](pic/chapter10/image32.png) 
 
 在上位机界面，可以看到升级进度：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image33.png) 
+![img](pic/chapter10/image33.png) 
 
 在中控的LCD屏幕，在升级过程中显示“Send file to sensor: record_no =”类似的打印信息。
 
@@ -463,7 +463,7 @@ demo_f030_app_ch2_dev3_temp_humi.bin
 - APP占据1784KB空间
 - 配置信息占据最后一个扇区8KB空间：用来保存APP版本、大小、校验码等信息。
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image34.png) 
+![img](pic/chapter10/image34.png) 
 
 对于传感器，STM32F030CC内置256KB Flash，划分如下：
 
@@ -471,7 +471,7 @@ demo_f030_app_ch2_dev3_temp_humi.bin
 - APP占据126KB空间
 - 配置信息占据最后一个扇区2KB空间：用来保存APP版本、大小、校验码等信息。
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image35.png) 
+![img](pic/chapter10/image35.png) 
 
 #### **2. 升级流程**
 
@@ -500,11 +500,11 @@ demo_f030_app_ch2_dev3_temp_humi.bin
 
 上位机程序流程图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image36.png) 
+![img](pic/chapter10/image36.png) 
 
 中控和传感器的Bootloader程序流程图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image37.png) 
+![img](pic/chapter10/image37.png) 
 
 #### **3. 点表：增加命令寄存器**
 
@@ -601,11 +601,11 @@ Bootloader升级APP的流程步骤看起来很多，其实它就做3件事：
 
 上位机升级中控程序时，时序图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image38.png) 
+![img](pic/chapter10/image38.png) 
 
 上位机升级传感器程序时，时序图如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image39.png) 
+![img](pic/chapter10/image39.png) 
 
 ### 9.4.3 中控Bootloader代码讲解
 
@@ -620,7 +620,7 @@ Bootloader升级APP的流程步骤看起来很多，其实它就做3件事：
 
 代码在“h5_iap\demo\Core\Src\main.c”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image40.png) 
+![img](pic/chapter10/image40.png) 
 
 启动APP的关键在于：
 
@@ -631,42 +631,42 @@ Bootloader升级APP的流程步骤看起来很多，其实它就做3件事：
 
 前3点代码在“h5_iap\demo\Core\Src\jump.S”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image41.png) 
+![img](pic/chapter10/image41.png) 
 
 #### **2. 处理启动命令**
 
 代码在“h5_iap\demo\Core\Src\control.c”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image42.png) 
+![img](pic/chapter10/image42.png) 
 
 “process_emergency_cmd”函数在“h5_iap\demo\Core\Src\control.c”，代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image43.png) 
+![img](pic/chapter10/image43.png) 
 
 怎么启动Bootloader呢？先写配置信息，再软件复位。代码在“h5_iap\demo\Core\Src\bootloader.c”：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image44.png) 
+![img](pic/chapter10/image44.png) 
 
 怎么启动APP呢？先写配置信息，再软件复位。代码在“h5_iap\demo\Core\Src\bootloader.c”：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image45.png) 
+![img](pic/chapter10/image45.png) 
 
 #### **3. 处理文件块（Write File Record）**
 
 代码在“h5_iap\demo\Core\Src\control.c”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image46.png) 
+![img](pic/chapter10/image46.png) 
 
 “process_file_record”函数在“h5_iap\demo\Core\Src\control.c”，代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image47.png) 
+![img](pic/chapter10/image47.png) 
 
 对于“给主控烧写固件”，分为2步：
 
 - 得到record_no为0的文件头：记录文件大小、擦除Flash
 - 得到record_no不为0的文件块：烧录Flash、最后写配置信息
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image48.png) 
+![img](pic/chapter10/image48.png) 
 
 ### 9.4.4 传感器Bootloader代码和中控APP代码讲解
 
@@ -683,7 +683,7 @@ Bootloader代码为“3_程序源码\01_视频配套的源码\9-3-1_读写任意
 
 代码在“f030_iap\demo\Core\Src\main.c”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image49.png) 
+![img](pic/chapter10/image49.png) 
 
 启动APP的关键在于：
 
@@ -695,53 +695,53 @@ STM32F030CC没有VTOR寄存器，无法通过修改它指定异常向量表，�
 
 Bootloader启动APP时，要把地址0映射到内存（0x20000000），代码在“f030_iap\demo\Core\Src\jump.S”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image50.png) 
+![img](pic/chapter10/image50.png) 
 
 ② 读取APP异常向量表的第1个数据，把它写入SP寄存器
 ③ 读取APP异常向量表的第2个数据，跳转执行
 
 第②③点代码在“f030_iap\demo\Core\Src\jump.S”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image51.png) 
+![img](pic/chapter10/image51.png) 
 
 那么，传感器的程序就不要使用内存前面的区域，如下设置：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image52.png) 
+![img](pic/chapter10/image52.png) 
 
 #### **2. 处理启动命令**
 
 代码在“f030_iap\demo\Core\Src\freertos.c”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image53.png) 
+![img](pic/chapter10/image53.png) 
 
 “process_emergency_cmd”函数在“f030_iap\demo\Core\Src\control.c”，代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image54.png) 
+![img](pic/chapter10/image54.png) 
 
 怎么启动Bootloader呢？先写配置信息，再软件复位。代码在“f030_iap\demo\Core\Src\bootloader.c”：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image55.png) 
+![img](pic/chapter10/image55.png) 
 
 怎么启动APP呢？先写配置信息，再软件复位。代码在“f030_iap\demo\Core\Src\bootloader.c”：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image56.png) 
+![img](pic/chapter10/image56.png) 
 
 #### **3. 处理文件块（Write File Record）**
 
 代码在“f030_iap\demo\Core\Src\freertos.c”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image57.png) 
+![img](pic/chapter10/image57.png) 
 
 “process_file_record”函数在“f030_iap_iap\demo\Core\Src\control.c”，代码如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image58.png) 
+![img](pic/chapter10/image58.png) 
 
 对于烧写固件，分为2步：
 
 - 得到record_no为0的文件头：记录文件大小、擦除Flash
 - 得到record_no不为0的文件块：烧录Flash、最后写配置信息
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image59.png) 
+![img](pic/chapter10/image59.png) 
 
 #### **4. 中控APP要点**
 
@@ -756,8 +756,8 @@ Bootloader启动APP时，要把地址0映射到内存（0x20000000），代码�
 
 中控马上处理收到命令、“Write File Record”，代码在“h5_iap\demo\Core\Src\control.c”，而不是交给其他任务来处理（读写一般寄存器时，时让其他任务处理的）。如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image60.png) 
+![img](pic/chapter10/image60.png) 
 
 怎么阻塞其他任务？代码在“h5_iap\demo\Core\Src\control.c”，如下：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter10/image61.png) 
+![img](pic/chapter10/image61.png) 
