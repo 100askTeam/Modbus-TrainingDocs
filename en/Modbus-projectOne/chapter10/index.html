@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.0.1">
 <title data-rh="true">第9章 综合实现 | 全场景工业互联</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://modbus.100ask.net/en/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://modbus.100ask.net/en/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://modbus.100ask.net/en/Modbus-projectOne/chapter10"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" property="og:locale:alternate" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="第9章 综合实现 | 全场景工业互联"><meta data-rh="true" name="description" content="本章课程将根据上位机的接口规范，编写主控、传感器的综合程序：让上位机能读写传感器、升级主控程序、升级传感器程序。"><meta data-rh="true" property="og:description" content="本章课程将根据上位机的接口规范，编写主控、传感器的综合程序：让上位机能读写传感器、升级主控程序、升级传感器程序。"><link data-rh="true" rel="icon" href="/en/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://modbus.100ask.net/en/Modbus-projectOne/chapter10"><link data-rh="true" rel="alternate" href="https://modbus.100ask.net/Modbus-projectOne/chapter10" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://modbus.100ask.net/en/Modbus-projectOne/chapter10" hreflang="en"><link data-rh="true" rel="alternate" href="https://modbus.100ask.net/Modbus-projectOne/chapter10" hreflang="x-default"><link rel="stylesheet" href="/en/assets/css/styles.e3ab61ce.css">
-<script src="/en/assets/js/runtime~main.fa08e612.js" defer="defer"></script>
+<script src="/en/assets/js/runtime~main.ce7aff1d.js" defer="defer"></script>
 <script src="/en/assets/js/main.9f7dd060.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -12,9 +12,9 @@
 <p>本章课程将根据上位机的接口规范，编写主控、传感器的综合程序：让上位机能读写传感器、升级主控程序、升级传感器程序。</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="91-产品框架">9.1 产品框架<a href="#91-产品框架" class="hash-link" aria-label="Direct link to 9.1 产品框架" title="Direct link to 9.1 产品框架">​</a></h2>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="911-硬件框架">9.1.1 硬件框架<a href="#911-硬件框架" class="hash-link" aria-label="Direct link to 9.1.1 硬件框架" title="Direct link to 9.1.1 硬件框架">​</a></h3>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image1.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image1-bdb13b3a28b17bdba060734f92b04f29.png" width="829" height="718" class="img_ev3q"></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="912-设计思路">9.1.2 设计思路<a href="#912-设计思路" class="hash-link" aria-label="Direct link to 9.1.2 设计思路" title="Direct link to 9.1.2 设计思路">​</a></h3>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-上位机如何定位到传感器"><strong>1. 上位机如 何定位到传感器</strong><a href="#1-上位机如何定位到传感器" class="hash-link" aria-label="Direct link to 1-上位机如何定位到传感器" title="Direct link to 1-上位机如何定位到传感器">​</a></h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-上位机如何定位到传感器"><strong>1. 上位机如何定位到传感器</strong><a href="#1-上位机如何定位到传感器" class="hash-link" aria-label="Direct link to 1-上位机如何定位到传感器" title="Direct link to 1-上位机如何定位到传感器">​</a></h4>
 <p>站在上位机的角度，以“Modbus传感器2为例”，上位机需要通过com1、channel1发出Modbus数据包，数据包里含有“设备地址”、“寄存器类别”、“寄存器地址”。所以，上位机需要确定这几个参数：</p>
 <ul>
 <li>串口：com1还是com2，或其他</li>
@@ -29,17 +29,17 @@
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-中控如何读写传感器"><strong>3. 中控如何读写传感器</strong><a href="#3-中控如何读写传感器" class="hash-link" aria-label="Direct link to 3-中控如何读写传感器" title="Direct link to 3-中控如何读写传感器">​</a></h4>
 <p>中控程序得到上位机发来的“映射”信息后：</p>
 <ul>
-<li>读操作：中控不  断地读取传感器的某个点的数值，以备上位机读取。</li>
+<li>读操 作：中控不断地读取传感器的某个点的数值，以备上位机读取。</li>
 <li>写操作：中控等待上位机发来的写命令，根据这些写命令去写传感器。</li>
 </ul>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="4-上位机如何发送映射关系传输固件"><strong>4. 上位机如何发送映射关系、传输固件</strong><a href="#4-上位机如何发送映射关系传输固件" class="hash-link" aria-label="Direct link to 4-上位机如何发送映射关系传输固件" title="Direct link to 4-上位机如何发送映射关系传输固件">​</a></h4>
 <p>Modbus里有“Write File Record”功能，可以使用它来发送大量数据、发送文件。</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="5-上位机界面"><strong>5. 上位机界面</strong><a href="#5-上位机界面" class="hash-link" aria-label="Direct link to 5-上位机界面" title="Direct link to 5-上位机界面">​</a></h4>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image2.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image2-8264c6d566461cdca33e2e8bca1caa39.png" width="1191" height="423" class="img_ev3q"></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="913-软件框架">9.1.3 软件框架<a href="#913-软件框架" class="hash-link" aria-label="Direct link to 9.1.3 软件框架" title="Direct link to 9.1.3 软件框架">​</a></h3>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image3.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image3-9a5ec25fc4e17cafe1b35375f1a97b48.png" width="1505" height="556" class="img_ev3q"></p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="92-改造libmodbus实现文件传输">9.2 改造libmodbus实现文件传输<a href="#92-改造libmodbus实现文件传输" class="hash-link" aria-label="Direct link to 9.2 改造libmodbus实现文件传输" title="Direct link to 9.2 改造libmodbus实现文件传输">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="921-分析write-file-record功能">9.2.1 分析Write File Record功能<a href="#921-分析write-file-record功能" class="hash-link" aria-label="Direct link to 9.2.1 分析Write File Record功能" title="Direct link to 9.2.1 分析Write File Record功能">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="921-分析write-file-record功能">9.2.1 分析Write File Record功能<a href="#921-分析write-file-record功能" class="hash-link" aria-label="Direct link to 9.2.1   分析Write File Record功能" title="Direct link to 9.2.1 分析Write File Record功能">​</a></h3>
 <p>想想这个场景，你要发出多个文件，每个文件还都很大，那么必然就是分块发送：</p>
 <ul>
 <li>当前发送的是哪个文件？数据包里有“File Number”</li>
@@ -48,7 +48,7 @@
 <li>数据本身</li>
 </ul>
 <p>“Write File Record”的请求格式如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image4.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image4-c56fa69644a49742c18ba9520e5228c0.png" width="949" height="277" class="img_ev3q"></p>
 <p>“Write File Record”的回应跟请求包一模一样。</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="922-实现write-file-record">9.2.2 实现Write File Record<a href="#922-实现write-file-record" class="hash-link" aria-label="Direct link to 9.2.2 实现Write File Record" title="Direct link to 9.2.2 实现Write File Record">​</a></h3>
 <p>本节源码为“3_程序源码\01_视频配套的源码\ 9-2-2_实现Write_File_Record\h5_write_file_record”。</p>
@@ -65,22 +65,22 @@
 </li>
 </ul>
 <p>按照下图连线：调试、供电、两个485互连：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image5.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image5-15d078f9eed1fcea657afc1ea37b898f.png" width="552" height="606" class="img_ev3q"></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="923-uart驱动严重bug">9.2.3 UART驱动严重Bug<a href="#923-uart驱动严重bug" class="hash-link" aria-label="Direct link to 9.2.3 UART驱动严重Bug" title="Direct link to 9.2.3 UART驱动严重Bug">​</a></h3>
 <p>本节源码为“3_程序源码\01_视频配套的源码\9-2-3_UART驱动严重Bug\h5_uart_dma_ok.7z”。</p>
 <p>我们使用“HAL_UARTEx_ReceiveToIdle_DMA”来启动UART数据的接收，假设传入的数据长度是100。当数据接收完毕，或者发生了Idle中断时，“HAL_UARTEx_RxEventCallback”函数被调用。但是！除了这两种情况之外，当接收到一半数据时，这个函数也会被调用。</p>
 <p>在以前的代码里，我们误认为“数据全部接收完毕”、“发生Idle中断”时，才会调用“HAL_UARTEx_RxEventCallback”。在里面，我们认为数据接收完毕，于是再次启动DMA传输。这会导致在接收到一半数据、触发“HAL_UARTEx_RxEventCallback”调用时，我们也再次启动DMA传输，导致数据丢失。</p>
 <p>正确的“HAL_UARTEx_RxEventCallback”函数代码如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image6.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image6-fa39b0afb2ef60db604a20fecb54762d.png" width="906" height="653" class="img_ev3q"></p>
 <div class="language-c codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-c codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">void</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">HAL_UARTEx_RxEventCallback</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">UART_HandleTypeDef </span><span class="token operator" style="color:#393A34">*</span><span class="token plain">huart</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token class-name">uint16_t</span><span class="token plain"> Size</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    PUART_Data pdata</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token keyword" style="color:#00009f">static</span><span class="token plain"> </span><span class="token class-name">uint16_t</span><span class="token plain"> old_pos</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token keyword" style="color:#00009f">if</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">huart </span><span class="token operator" style="color:#393A34">==</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">&amp;</span><span class="token plain">huart2</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        pdata </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">&amp;</span><span class="token plain">g_uart2_data</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token keyword" style="color:#00009f">if</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">huart </span><span class="token operator" style="color:#393A34">==</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">&amp;</span><span class="token plain">huart4</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        pdata </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">&amp;</span><span class="token plain">g_uart4_data</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token comment" style="color:#999988;font-style:italic">/* write queue : g_uart4_rx_buf Size bytes ==&gt; queue */</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token keyword" style="color:#00009f">for</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token keyword" style="color:#00009f">int</span><span class="token plain"> i </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> old_pos</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"> i </span><span class="token operator" style="color:#393A34">&lt;</span><span class="token plain"> Size</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"> i</span><span class="token operator" style="color:#393A34">++</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token function" style="color:#d73a49">xQueueSendFromISR</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">pdata</span><span class="token operator" style="color:#393A34">-&gt;</span><span class="token plain">rxQueue</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">void</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">*</span><span class="token punctuation" style="color:#393A34">)</span><span class="token operator" style="color:#393A34">&amp;</span><span class="token plain">pdata</span><span class="token operator" style="color:#393A34">-&gt;</span><span class="token plain">rx_buf</span><span class="token punctuation" style="color:#393A34">[</span><span class="token plain">i</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token constant" style="color:#36acaa">NULL</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    old_pos </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> Size</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token keyword" style="color:#00009f">if</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">huart</span><span class="token operator" style="color:#393A34">-&gt;</span><span class="token plain">RxEventType </span><span class="token operator" style="color:#393A34">!=</span><span class="token plain"> HAL_UART_RXEVENT_HT</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        old_pos </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">0</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token comment" style="color:#999988;font-style:italic">/* re-start DMA+IDLE rx */</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token function" style="color:#d73a49">HAL_UARTEx_ReceiveToIdle_DMA</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">pdata</span><span class="token operator" style="color:#393A34">-&gt;</span><span class="token plain">huart</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> pdata</span><span class="token operator" style="color:#393A34">-&gt;</span><span class="token plain">rx_buf</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> UART_RX_BUF_LEN</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <p>当使用libmodbus时，有两个超时时间需要仔细考虑（Middlewares\Third_Party\libmodbus\modbus-private.h）：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image7.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image7-e1fe279f257e4f7d0d3c0012152c05bb.png" width="465" height="92" class="img_ev3q"></p>
 <p>“_RESPONSE_TIMEOUT”是“等待回应的时间”：client给server发出请求后，client要等待server发出的回应，这个等待时间要设置得比较大，以便server有足够的时间处理数据并发出回应。</p>
 <p>“_BYTE_TIMEOUT”是“等待后续数据的时间”：一旦得到回应的第一个数据后，后续的数据应该是连续不断地来到，所以后续的超时时间可以设置得比较小(比如设置为modbus协议规定的3.5个字节时长)。但是，对于DMA传输要特殊考虑。</p>
 <p>当使用DMA方式接收数据时，DMA可以及时地把串口接收到的数据存入内存，但是它无法及时通知应用程序：假设启动DMA传输来读取256字节(modbus rtu最大数据包)数据，当读取到一半数据即128字节的数据时才会触发“Half Transfer”的回调，这时才会通知应用程序。所以，使用libmosbus等待回应时，超时时间要设置得比较大，不仅要大于接收完128字节数据的时间，也要考虑：留更多的时间给对方，以便它有足够的时间处理数据然后回复。</p>
-<p>当应用程序读取到第一个回应的数据后，以后再读取后续数据时，超时时间如何设置？假设client等待回应后得到了一半的数 据共128字节，它需要等待多久才可以得到第129个字节数据？DMA很快得到第129个数据，但是要等待剩余数据全部接收完毕，这时才会发生中断，应用程序才被通知到。得到回应之后（接收到一半的数据之后），DMA传输完成还需要一半数据的时间，以波特率115200为例，需要128x10/115200=11.1ms。所以，使用libmosbus传输比较大的回应数据时，xxx超时时间设置为10ms是不够的，为了保险，我们可以设置为20ms。</p>
+<p>当应用程序读取到第一个回应的 数据后，以后再读取后续数据时，超时时间如何设置？假设client等待回应后得到了一半的数据共128字节，它需要等待多久才可以得到第129个字节数据？DMA很快得到第129个数据，但是要等待剩余数据全部接收完毕，这时才会发生中断，应用程序才被通知到。得到回应之后（接收到一半的数据之后），DMA传输完成还需要一半数据的时间，以波特率115200为例，需要128x10/115200=11.1ms。所以，使用libmosbus传输比较大的回应数据时，xxx超时时间设置为10ms是不够的，为了保险，我们可以设置为20ms。</p>
 <p>修改后的代码如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image8.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image8-d08dab240c970bc43230b2c87888f64d.png" width="383" height="92" class="img_ev3q"></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="924-实现文件传输">9.2.4 实现文件传输<a href="#924-实现文件传输" class="hash-link" aria-label="Direct link to 9.2.4 实现文件传输" title="Direct link to 9.2.4 实现文件传输">​</a></h3>
 <p>本节源码为“3_程序源码\01_视频配套的源码\9-2-4_实现文件传输\h5_write_file”。</p>
 <p>对于“Write File Record”功能，它仅仅传输“一小块”数据，接收方无法从“这一小块”数据里知道“文件总大小”等信息。文件传输的功能需要我们自己实现：</p>
@@ -98,9 +98,9 @@
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="931-上机演示">9.3.1 上机演示<a href="#931-上机演示" class="hash-link" aria-label="Direct link to 9.3.1 上机演示" title="Direct link to 9.3.1 上机演示">​</a></h3>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-接线"><strong>1. 接线</strong><a href="#1-接线" class="hash-link" aria-label="Direct link to 1-接线" title="Direct link to 1-接线">​</a></h4>
 <p>如下图连线，H5控制板使用USB线供电，中间的HUB也使用USB供电：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image9.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image9-73fa03a17240309d69891a42cc00d038.png" width="1216" height="479" class="img_ev3q"></p>
 <p>连接示意图为：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image10.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image10-997b6bbb5e03e42aa65e8aaf6a18c995.png" width="1815" height="688" class="img_ev3q"></p>
 <p><strong>注意</strong>：三个传感器的启动开关都拨到“ON”位置。</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-烧写程序"><strong>2. 烧写程序</strong><a href="#2-烧写程序" class="hash-link" aria-label="Direct link to 2-烧写程序" title="Direct link to 2-烧写程序">​</a></h4>
 <p>先烧写中控（H5开发板），工程为“3_程序源码\01_视频配套的源码\9-3-1_读写任意传感器上机演示\02_中控程序\h5_read_write_with_map.7z”。</p>
@@ -109,19 +109,19 @@
 <div class="language-c codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-c codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token macro property directive-hash" style="color:#36acaa">#</span><span class="token macro property directive keyword" style="color:#00009f">define</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property macro-name" style="color:#36acaa">USE_SWITCH_SENSOR</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property expression number" style="color:#36acaa">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token macro property directive-hash" style="color:#36acaa">#</span><span class="token macro property directive keyword" style="color:#00009f">define</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property macro-name" style="color:#36acaa">USE_ENV_MONITOR_SENSOR</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property expression number" style="color:#36acaa">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token macro property directive-hash" style="color:#36acaa">#</span><span class="token macro property directive keyword" style="color:#00009f">define</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property macro-name" style="color:#36acaa">USE_TMP_HUMI_SENSOR</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property expression number" style="color:#36acaa">1</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-使用"><strong>3. 使用</strong><a href="#3-使用" class="hash-link" aria-label="Direct link to 3-使用" title="Direct link to 3-使用">​</a></h4>
 <p>先启动上位机：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image11.png" alt="img" class="img_ev3q"></p>
-<p>再增加、设置“点”。</p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image11-83ce410eedb01fea851327ff710c3ec7.png" width="1029" height="213" class="img_ev3q"></p>
+<p>再 增加、设置“点”。</p>
 <p>比如要操作接在CH2上的温湿度传感器的蜂鸣器1，如下设置：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image12.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image12-e8d9236e0271b89b75eb0b902f7bef35.png" width="1195" height="397" class="img_ev3q"></p>
 <p>比如要操作中控（H5开发板自带的LED），如下设置：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image13.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image13-6bd76dcaadeffb572a4ba865729dac01.png" width="1199" height="403" class="img_ev3q"></p>
 <p><strong>注意</strong>：</p>
 <ul>
 <li>在上位机里进行设置时，无法使用实体键盘（LVGL前台程序使用键盘有点难度），需要使用它弹出的虚拟键盘。</li>
 <li>为了有空间显示虚拟键盘，当前要设置的“点”，会自动移到屏幕的最上面。</li>
 </ul>
 <p>最后就可以读写点了，比如：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image14.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image14-7c85a3dbc8bde7a9379fc3e1a8fd4c6e.png" width="1173" height="279" class="img_ev3q"></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="932-使用点的映射表操作任意传感器的原理">9.3.2 使用“点”的映射表操作任意传感器的原理<a href="#932-使用点的映射表操作任意传感器的原理" class="hash-link" aria-label="Direct link to 9.3.2 使用“点”的映射表操作任意传感器的原理" title="Direct link to 9.3.2 使用“点”的映射表操作任意传感器的原理">​</a></h3>
 <p>在《7.7.2 上位机访问多个传感器》曾经讲解过“点”的映射，它使用固定的映射表。本节课程将使用更加灵活的、随时可变的映射表。</p>
 <p>上位机要读写传感器，需要中控进行转发。在上位机的角度，它只看到中控、只是读写中控的寄存器。中控需要“帮助”上位机去读写下挂的传感器。这里存在“点”的映射关系：上位机要读写的主控的“点”，怎么跟具体传感器的“点”对应。</p>
@@ -158,7 +158,7 @@
 </ul>
 </li>
 </ul>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image15.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image15-fc6fe3d6f004b4cfefd51fb5bf91a3cb.png" width="859" height="892" class="img_ev3q"></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="933-中控代码讲解">9.3.3 中控代码讲解<a href="#933-中控代码讲解" class="hash-link" aria-label="Direct link to 9.3.3 中控代码讲解" title="Direct link to 9.3.3 中控代码讲解">​</a></h3>
 <p>讲解“3_程序源码\01_视频配套的源码\9-3-1_读写任意传感器上机演示\02_中控程序\h5_read_write_with_map.7z”。</p>
 <p>要讲解的代码，都在“Core\Src\control.c”里。</p>
@@ -169,7 +169,7 @@
 <li>根据上位机的读写请求操作DI/DO/AI/AO寄存器</li>
 </ul>
 <p>代码如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image16.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image16-70e003bd9b2cd7069b5ce43ba463ebaf.png" width="958" height="403" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-ch0_task任务"><strong>2. CH0_Task任务</strong><a href="#2-ch0_task任务" class="hash-link" aria-label="Direct link to 2-ch0_task任务" title="Direct link to 2-ch0_task任务">​</a></h4>
 <p>它有2个功能</p>
 <ul>
@@ -177,7 +177,7 @@
 <li>当映射表里channel 0对应的DO/AO寄存器发生变化时，用来设置中控本身的传感器</li>
 </ul>
 <p>代码如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image17.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image17-3ddc702278ef7d747b92b5f729f18832.png" width="562" height="252" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-ch1_taskch2_task任务"><strong>3. CH1_Task、CH2_Task任务</strong><a href="#3-ch1_taskch2_task任务" class="hash-link" aria-label="Direct link to 3-ch1_taskch2_task任务" title="Direct link to 3-ch1_taskch2_task任务">​</a></h4>
 <p>它们功能类似，都有2个功能</p>
 <ul>
@@ -185,87 +185,87 @@
 <li>当映射表里channel 1或channel 2对应的DO/AO寄存器发生变化时，用来设置对应的传感器</li>
 </ul>
 <p>代码如下（以CH1_Task为例）：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image18.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image18-646fed0b7f66ade940b61349264b4a88.png" width="822" height="494" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-loop_once函数"><strong>3. loop_once函数</strong><a href="#3-loop_once函数" class="hash-link" aria-label="Direct link to 3-loop_once函数" title="Direct link to 3-loop_once函数">​</a></h4>
 <p>它是CH0_Task、CH1_Task、CH2_Task的主要函数，代码如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image19.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image19-6a8826cf4000f7474c6fda2520a9776e.png" width="887" height="1175" class="img_ev3q"></p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="94-iap升级">9.4 IAP升级<a href="#94-iap升级" class="hash-link" aria-label="Direct link to 9.4 IAP升级" title="Direct link to 9.4 IAP升级">​</a></h2>
 <p>IAP是In Application Programming的首字母缩写，IAP是用户自己的程序在运行过程中对User Flash的部分区域进行烧写，目的是为了在产品发布后可以方便地通过预留的通信口对产品中的固件程序进行更新升级。</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="941-上机演示">9.4.1 上机演示<a href="#941-上机演示" class="hash-link" aria-label="Direct link to 9.4.1 上机演示" title="Direct link to 9.4.1 上机演示">​</a></h3>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-接线-1"><strong>1. 接线</strong><a href="#1-接线-1" class="hash-link" aria-label="Direct link to 1-接 线-1" title="Direct link to 1-接线-1">​</a></h4>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="941-上机演  示">9.4.1 上机演示<a href="#941-上机演示" class="hash-link" aria-label="Direct link to 9.4.1 上机演示" title="Direct link to 9.4.1 上机演示">​</a></h3>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-接线-1"><strong>1. 接线</strong><a href="#1-接线-1" class="hash-link" aria-label="Direct link to 1-接线-1" title="Direct link to 1-接线-1">​</a></h4>
 <p>如下图连线，H5控制板使用USB线供电，中间的HUB也使用USB供电：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image20.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image20-73fa03a17240309d69891a42cc00d038.png" width="1216" height="479" class="img_ev3q"></p>
 <p>连接示意图为：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image21.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image21-997b6bbb5e03e42aa65e8aaf6a18c995.png" width="1815" height="688" class="img_ev3q"></p>
 <p><strong>注意</strong>：三个传感器的启动开关都拨到“ON”位置。</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-烧写h5-bootloader程序"><strong>2. 烧写H5 Bootloader程序</strong><a href="#2-烧写h5-bootloader程序" class="hash-link" aria-label="Direct link to 2-烧写h5-bootloader程序" title="Direct link to 2-烧写h5-bootloader程序">​</a></h4>
 <p>先烧写中控（H5开发板），工程为“3_程序源码\01_视频配套的源码\9-4-1_IAP升级上机演示\02_中控程序\h5_iap.7z”。</p>
 <p>注意：H5的BootLoader和APP是同一套代码，需要指定不同的ROM地址，如下设置即为Bootloader。</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image22.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image22-3964f2d198eaf40e3c4abe4a7a31c9eb.png" width="790" height="505" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-烧写传感器bootloader程序"><strong>3. 烧写传感器Bootloader程序</strong><a href="#3-烧写传感器bootloader程序" class="hash-link" aria-label="Direct link to 3-烧写传感器bootloader程序" title="Direct link to 3-烧写传感器bootloader程序">​</a></h4>
-<p>分别烧写三个传感器的Bootloader，工程为“3_程序源码\01_视频配套的源码\9-3-1_读写任意传感器上机演示\03_传感器程序\f030_iap.7z”。</p>
+<p>分别烧写三个传感器的Bootloader，工程为“3_程序源码\01_视频配套 的源码\9-3-1_读写任意传感器上机演示\03_传感器程序\f030_iap.7z”。</p>
 <p>注意：传感器的BootLoader和APP是同一套代码，需要指定不同的ROM地址。</p>
 <p>先如下设置ROM地址：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image23.png" alt="img" class="img_ev3q"></p>
-<p>注意：f030_iap需要  分别设置下面的宏（这3个宏同一时间只能定义一个），编译出程序后分别烧写到3个传感器里。</p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image23-a7db72f4965279458d4774f680cee4a3.png" width="666" height="503" class="img_ev3q"></p>
+<p>注意：f030_iap需要分别设置下面的宏（这3个宏同一时间只能定义一个），编译出程序后分别烧写到3个传感器里。</p>
 <p>再修改“f030_ipa\demo\Core\Src\freertos.c”，定义宏开关：</p>
 <div class="language-c codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-c codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token macro property directive-hash" style="color:#36acaa">#</span><span class="token macro property directive keyword" style="color:#00009f">define</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property macro-name" style="color:#36acaa">USE_SWITCH_SENSOR</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property expression number" style="color:#36acaa">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token macro property directive-hash" style="color:#36acaa">#</span><span class="token macro property directive keyword" style="color:#00009f">define</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property macro-name" style="color:#36acaa">USE_ENV_MONITOR_SENSOR</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property expression number" style="color:#36acaa">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token macro property directive-hash" style="color:#36acaa">#</span><span class="token macro property directive keyword" style="color:#00009f">define</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property macro-name" style="color:#36acaa">USE_TMP_HUMI_SENSOR</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property expression number" style="color:#36acaa">1</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <p>编译后，就可以分别烧录到对应的传感器。</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="4-编译h5-app"><strong>4. 编译H5 APP</strong><a href="#4-编译h5-app" class="hash-link" aria-label="Direct link to 4-编译h5-app" title="Direct link to 4-编译h5-app">​</a></h4>
 <p>可以使用如下目录有事先编译好的APP：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image24.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image24-64a6220953ce9b54283abe679420a2be.png" width="473" height="170" class="img_ev3q"></p>
 <p>也可以自己编译。工程为“3_程序源码\01_视频配套的源码\9-4-1_IAP升级上机演示\02_中控程序\h5_iap.7z”。</p>
 <p>注意：H5的BootLoader和APP是同一套代码，需要指定不同的ROM地址，如下设置即为APP。</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image25.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image25-6224e189059895ab80ccd71bf8499ded.png" width="771" height="500" class="img_ev3q"></p>
 <p>编译得到bin文件：demo_h5_app.bin。</p>
 <p>最后，把bin文件放到上位机程序相同的目录下，这点很重要。由于LVGL的限制，目前只支持使用同目录下的文件。</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="5-编译传感器-app"><strong>5. 编译传感器 APP</strong><a href="#5-编译传感器-app" class="hash-link" aria-label="Direct link to 5-编译传感器-app" title="Direct link to 5-编译传感器-app">​</a></h4>
 <p>可以使用如下目录有事先编译好的APP：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image26.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image26-64a6220953ce9b54283abe679420a2be.png" width="473" height="170" class="img_ev3q"></p>
 <p>也可以自己编译。工程为“3_程序源码\01_视频配套的源码\9-4-1_IAP升级上机演示\03_传感器程序\f030_iap.7z”。</p>
 <p>注意：传感器的BootLoader和APP是同一套代码，需要指定不同的ROM地址。</p>
 <p>先如下设置ROM地址：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image27.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image27-0e93248740bb4b86ed0fb04dbc11f6af.png" width="666" height="503" class="img_ev3q"></p>
 <p>注意：f030_iap需要分别设置下面的宏（这3个宏同一时间只能定义一个），编译出程序后分别烧写到3个传感器里。</p>
 <p>再修改“f030_ipa\demo\Core\Src\freertos.c”，定义宏开关：</p>
 <div class="language-c codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-c codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token macro property directive-hash" style="color:#36acaa">#</span><span class="token macro property directive keyword" style="color:#00009f">define</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property macro-name" style="color:#36acaa">USE_SWITCH_SENSOR</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property expression number" style="color:#36acaa">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token macro property directive-hash" style="color:#36acaa">#</span><span class="token macro property directive keyword" style="color:#00009f">define</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property macro-name" style="color:#36acaa">USE_ENV_MONITOR_SENSOR</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property expression number" style="color:#36acaa">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token macro property directive-hash" style="color:#36acaa">#</span><span class="token macro property directive keyword" style="color:#00009f">define</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property macro-name" style="color:#36acaa">USE_TMP_HUMI_SENSOR</span><span class="token macro property" style="color:#36acaa"> </span><span class="token macro property expression number" style="color:#36acaa">1</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <p>编译后，就可以得到“demo_f030_app.bin”。对于不同的传感器，可以把bin文件分别改名为：</p>
 <div class="language-c codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-c codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">demo_f030_app_ch1_dev1_switch</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">bin</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">demo_f030_app_ch1_dev2_env_monitor</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">bin</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">demo_f030_app_ch2_dev3_temp_humi</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">bin</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <p>最后，把bin文件放到上位机程序相同的目录下，这点很重要。由于LVGL的限制，目前只支持使用同目录下的文件。</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="6-升级中控"><strong>6. 升级中控</strong><a href="#6-升级中控" class="hash-link" aria-label="Direct link to 6-升级中控" title="Direct link to 6-升级中控">​</a></h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="6-升级中控"><strong>6. 升级中控</strong><a href="#6-升级中控" class="hash-link" aria-label="Direct link to 6-升级中 控" title="Direct link to 6-升级中控">​</a></h4>
 <p>先启动上位机：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image28.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image28-d0dec485f44f6af4b0f0748755e59f96.png" width="490" height="178" class="img_ev3q"></p>
 <p>在界面上如下操作：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image29.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image29-1f82f756fb6490f17bad91a996b1d467.png" width="1372" height="784" class="img_ev3q"></p>
 <p>在上位机界面，可以看到升级进度：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image30.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image30-d978c98d33bfaf607de5ec322455d7be.png" width="947" height="516" class="img_ev3q"></p>
 <p>在中控的LCD屏幕，在升级过程中显示“Bootloader”，升级完成后显示“Application”。</p>
 <p>然后就可以按照《9.3.1 上机演示》使用中控了。</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="7-升级传感器"><strong>7. 升级传感器</strong><a href="#7-升级传感器" class="hash-link" aria-label="Direct link to 7-升级传感器" title="Direct link to 7-升级传感器">​</a></h4>
 <p>先启动上位机：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image31.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image31-d0dec485f44f6af4b0f0748755e59f96.png" width="490" height="178" class="img_ev3q"></p>
 <p>在界面上如下操作：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image32.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image32-12d004d56493618b191e2b26ffe0b9b2.png" width="1378" height="761" class="img_ev3q"></p>
 <p>在上位机界面，可以看到升级进度：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image33.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image33-9ab50264ef1f08cf0ae0134a72f6e889.png" width="956" height="506" class="img_ev3q"></p>
 <p>在中控的LCD屏幕，在升级过程中显示“Send file to sensor: record_no =”类似的打印信息。</p>
 <p>升级完成后，可以看到传感器的三个LED亮起。然后就可以按照《9.3.1 上机演示》使用传感器了。</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="942-iap升级的软件设计思路">9.4.2 IAP升级的软件设计思路<a href="#942-iap升级的软件设计思路" class="hash-link" aria-label="Direct link to 9.4.2 IAP升级的软件设计思路" title="Direct link to 9.4.2 IAP升级的软件设计思路">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="942-iap升级的软件设计思路">9.4.2 IAP升级的软件设计思路<a href="#942-iap升级的软件设 计思路" class="hash-link" aria-label="Direct link to 9.4.2 IAP升级的软件设计思路" title="Direct link to 9.4.2 IAP升级的软件设计思路">​</a></h3>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-flash划分"><strong>1. Flash划分</strong><a href="#1-flash划分" class="hash-link" aria-label="Direct link to 1-flash划分" title="Direct link to 1-flash划分">​</a></h4>
 <p>对于中控，STM32H563RIV内置2MB Flash，划分如下：</p>
 <ul>
 <li>Bootloader占据256KB空间</li>
 <li>APP占据1784KB空间</li>
-<li>配置信息占据最后一个 扇区8KB空间：用来保存APP版本、大小、校验码等信息。</li>
+<li>配置信息占据最后一个扇区8KB空间：用来保存APP版本、大小、校验码等信息。</li>
 </ul>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image34.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image34-1d074e4351bb643816b9fcda1905d4ad.png" width="878" height="173" class="img_ev3q"></p>
 <p>对于传感器，STM32F030CC内置256KB Flash，划分如下：</p>
 <ul>
 <li>Bootloader占据128KB空间</li>
 <li>APP占据126KB空间</li>
 <li>配置信息占据最后一个扇区2KB空间：用来保存APP版本、大小、校验码等信息。</li>
 </ul>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image35.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image35-13a6e644e6edbcce18756279e9eb4fb8.png" width="1052" height="218" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-升级流程"><strong>2. 升级流程</strong><a href="#2-升级流程" class="hash-link" aria-label="Direct link to 2-升级流程" title="Direct link to 2-升级流程">​</a></h4>
 <p>升级流程分为3个步骤：</p>
 <ul>
@@ -277,7 +277,7 @@
 </ul>
 <p>中控处于Bootloader的话则无需重启；中控处于APP的话，需要设置配置信息表明要进入Bootloader，然后软件复位；重启后运行的是Bootloader，它要根据配置信息保持在Bootloader。</p>
 <ul>
-<li>对于传感器：上位机直接发命令给中控，中控再转发给传感器让它进入Bootloader</li>
+<li>对于传  感器：上位机直接发命令给中控，中控再转发给传感器让它进入Bootloader</li>
 </ul>
 <p>传感器处于Bootloader的话则无需重启；传感器处于APP的话，需要设置配置信息表明要进入Bootloader，然后软件复位；重启后运行的是Bootloader，它要根据配置信息保持在Bootloader。</p>
 <p>注意：升级传感器时，中控要运行APP：它功能比Bootloader强大，可以更方便地操作传感器。</p>
@@ -288,16 +288,16 @@
 </ul>
 <p>当上位机发送完固件后，再给中控或传感器发送“启动APP”的命令。目标板就要设置配置信息表明要进入APP，然后软件复位；重启后运行的是Bootloader，它要根据配置信息启动APP。</p>
 <p>上位机程序流程图如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image36.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image36-c64174067156a416490c085de5aa2d9d.png" width="399" height="902" class="img_ev3q"></p>
 <p>中控和传感器的Bootloader程序流程图如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image37.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image37-496b5bdd770a34175389fb7b5f286940.png" width="735" height="927" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-点表增加命令寄存器"><strong>3. 点表：增加命令寄存器</strong><a href="#3-点表增加命令寄存器" class="hash-link" aria-label="Direct link to 3-点表增加命令寄存器" title="Direct link to 3-点表增加命令寄存器">​</a></h4>
 <p>无论是中控还是传感器，都需要接收“启动Bootloader”、“启动APP”的命令。可以增加一个点：地址为0，类型为“AO”（4x）。</p>
 <ul>
 <li>写入0x55，表示“启动Bootloader”，即：让目标板进入Bootloader状态</li>
 <li>写入0xAA，表示“启动APP”，即：让目标板进入APP状态</li>
 </ul>
-<p>最新点表如下：</p>
+<p>  最新点表如下：</p>
 <ul>
 <li>中控寄存器说明：</li>
 </ul>
@@ -327,7 +327,7 @@
 <ul>
 <li>处理文件块：</li>
 </ul>
-<p>中控的Bootloader需要处理映射信息、固件信息。传感器只会接收到固件信息，只需要处理固件信息。</p>
+<p>中控的Bootloader需要处理映射信息、固件信息  。传感器只会接收到固件信息，只需要处理固件信息。</p>
 <p>处理映射信息：对于接收到的“Write File Record”数据包，如果record_no为0则解析出文件大小；如果record_no不为0则用来记录映射表。</p>
 <p>处理固件信息：对于接收到的“Write File Record”数据包，如果record_no为0则解析出文件大小；如果record_no不为0则用来烧录Flash。</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="5-iap要点及时序图"><strong>5. IAP要点及时序图</strong><a href="#5-iap要点及时序图" class="hash-link" aria-label="Direct link to 5-iap要点及时序图" title="Direct link to 5-iap要点及时序图">​</a></h4>
@@ -346,19 +346,19 @@
 <li>目标是传感器的话，中控也要马上发送给传感器，确定传感器执行命令后，再回复给上位机。</li>
 </ul>
 <p>上位机升级中控程序时，时序图如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image38.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image38-00a4ef3d70768f43b50b72a084f7ce62.png" width="829" height="909" class="img_ev3q"></p>
 <p>上位机升级传感器程序时，时序图如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image39.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image39-91b06dc8d3b9657325f855cd4d7600e3.png" width="896" height="749" class="img_ev3q"></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="943-中控bootloader代码讲解">9.4.3 中控Bootloader代码讲解<a href="#943-中控bootloader代码讲解" class="hash-link" aria-label="Direct link to 9.4.3 中控Bootloader代码讲解" title="Direct link to 9.4.3 中控Bootloader代码讲解">​</a></h3>
 <p>中控代码为“3_程序源码\01_视频配套的源码\9-4-1_IAP升级上机演示\02_中控程序\h5_iap.7z”</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-bootloader启动判 断"><strong>1. Bootloader启动判断</strong><a href="#1-bootloader启动判断" class="hash-link" aria-label="Direct link to 1-bootloader启动判断" title="Direct link to 1-bootloader启动判断">​</a></h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-bootloader启动判断"><strong>1. Bootloader启动判断</strong><a href="#1-bootloader启动判断" class="hash-link" aria-label="Direct link to 1-bootloader启动判断" title="Direct link to 1-bootloader启动判断">​</a></h4>
 <p>读取配置信息，决定是否启动APP：</p>
 <ul>
 <li>如果配置信息无效，则保持在Bootloader</li>
 <li>如果配置信息明确表示要启动APP，则启动APP</li>
 </ul>
 <p>代码在“h5_iap\demo\Core\Src\main.c”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image40.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image40-a8505806216bfc126c44eb070a7773f2.png" width="677" height="397" class="img_ev3q"></p>
 <p>启动APP的关键在于：</p>
 <ul>
 <li>设置VTOR寄存器，重新指定异常向量表的位置为APP在Flash上的位置</li>
@@ -367,27 +367,27 @@
 <li>注释掉APP里设置VTOR的代码（它默认使用地址0），参考《8.2.3 编写APP》</li>
 </ul>
 <p>前3点代码在“h5_iap\demo\Core\Src\jump.S”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image41.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image41-1653ed4cdd1330cc46cf02cd126592e9.png" width="659" height="437" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-处理启动命令"><strong>2. 处理启动命令</strong><a href="#2-处理启动命令" class="hash-link" aria-label="Direct link to 2-处理启动命令" title="Direct link to 2-处理启动命令">​</a></h4>
 <p>代码在“h5_iap\demo\Core\Src\control.c”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image42.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image42-37ac5e7f4eef60310d09f9b0679b3a94.png" width="1152" height="846" class="img_ev3q"></p>
 <p>“process_emergency_cmd”函数在“h5_iap\demo\Core\Src\control.c”，代码如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image43.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image43-5e60b62d3201c7d2166ed958b34cc4c0.png" width="863" height="624" class="img_ev3q"></p>
 <p>怎么启动Bootloader呢？先写配置信息，再软件复位。代码在“h5_iap\demo\Core\Src\bootloader.c”：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image44.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image44-8ab3f248ca7a7f005aa7fa1b21d60a1e.png" width="964" height="554" class="img_ev3q"></p>
 <p>怎么启动APP呢？先写配置信息，再软件复位。代码在“h5_iap\demo\Core\Src\bootloader.c”：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image45.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image45-a903fb84d51df910e9167642c8b718f2.png" width="948" height="550" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-处理文件块write-file-record"><strong>3. 处理文件块（Write File Record）</strong><a href="#3-处理文件块write-file-record" class="hash-link" aria-label="Direct link to 3-处理文件块write-file-record" title="Direct link to 3-处理文件块write-file-record">​</a></h4>
 <p>代码在“h5_iap\demo\Core\Src\control.c”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image46.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image46-37ac5e7f4eef60310d09f9b0679b3a94.png" width="1152" height="846" class="img_ev3q"></p>
 <p>“process_file_record”函数在“h5_iap\demo\Core\Src\control.c”，代码如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image47.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image47-ce89ecac9d2aecac27d96b49cf2d4b63.png" width="832" height="486" class="img_ev3q"></p>
 <p>对于“给主控烧写固件”，分为2步：</p>
 <ul>
-<li>得到record_no为0的文件头：记录文件大小、擦除Flash</li>
+<li>得到record_no为0的文件头：记录文件  大小、擦除Flash</li>
 <li>得到record_no不为0的文件块：烧录Flash、最后写配置信息</li>
 </ul>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image48.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image48-f39dc496361e2991f8a29c383727f9e2.png" width="1317" height="953" class="img_ev3q"></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="944-传感器bootloader代码和中控app代码讲解">9.4.4 传感器Bootloader代码和中控APP代码讲解<a href="#944-传感器bootloader代码和中控app代码讲解" class="hash-link" aria-label="Direct link to 9.4.4 传感器Bootloader代码和中控APP代码讲解" title="Direct link to 9.4.4 传感器Bootloader代码和中控APP代码讲解">​</a></h3>
 <p>Bootloader代码为“3_程序源码\01_视频配套的源码\9-3-1_读写任意传感器上机演示\03_传感器程序\f030_iap.7z”。</p>
 <p>中控代码为“3_程序源码\01_视频配套的源码\9-4-1_IAP升级上机演示\02_中控程序\h5_iap.7z”</p>
@@ -398,50 +398,50 @@
 <li>如果配置信息明确表示要启动APP，则启动APP</li>
 </ul>
 <p>代码在“f030_iap\demo\Core\Src\main.c”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image49.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image49-b234dba3eeb79c8eee0e28e9a0738c1c.png" width="589" height="467" class="img_ev3q"></p>
 <p>启动APP的关键在于：</p>
 <p>① 重定位异常向量表：</p>
 <p>STM32F030CC没有VTOR寄存器，无法通过修改它指定异常向量表，它的异常向量表永远在地址0。但是可以设置一个寄存器，地址0映射到Flash（0x08000000）或内存（0x20000000）。</p>
 <p>运行Bootloader时，地址0默认就是映射到Flash（0x08000000），无需设置。</p>
 <p>Bootloader启动APP时，要把地址0映射到内存（0x20000000），代码在“f030_iap\demo\Core\Src\jump.S”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image50.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image50-30c8d926ce51a9bb084ead573c2fe394.png" width="1086" height="420" class="img_ev3q"></p>
 <p>② 读取APP异常向量表的第1个数据，把它写入SP寄存器
 ③ 读取APP异常向量表的第2个数据，跳转执行</p>
 <p>第②③点代码在“f030_iap\demo\Core\Src\jump.S”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image51.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image51-04e9f9f76855dc01b6d5fd470556a927.png" width="686" height="414" class="img_ev3q"></p>
 <p>那么，传感器的程序就不要使用内存前面的区域，如下设置：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image52.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image52-06d4a767164e9a2aaf0c7e328112488a.png" width="700" height="533" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-处理启动命令-1"><strong>2. 处理启动命令</strong><a href="#2-处理启动命令-1" class="hash-link" aria-label="Direct link to 2-处理启动命令-1" title="Direct link to 2-处理启动命令-1">​</a></h4>
 <p>代码在“f030_iap\demo\Core\Src\freertos.c”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image53.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image53-6393d8d1fcf277b0560726ad0fe858fb.png" width="968" height="608" class="img_ev3q"></p>
 <p>“process_emergency_cmd”函数在“f030_iap\demo\Core\Src\control.c”，代码如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image54.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image54-47089f39636c449833a23ffe305c9a42.png" width="847" height="775" class="img_ev3q"></p>
 <p>怎么启动Bootloader呢？先写配置信息，再软件复位。代码在“f030_iap\demo\Core\Src\bootloader.c”：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image55.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image55-3accae595c2f8158e32525d912787000.png" width="915" height="554" class="img_ev3q"></p>
 <p>怎么启动APP呢？先写配置信息，再软件复位。代码在“f030_iap\demo\Core\Src\bootloader.c”：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image56.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image56-02781bdb750e9397c66b1f69b84fe0de.png" width="900" height="550" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-处理文件块write-file-record-1"><strong>3. 处理文件块（Write File Record）</strong><a href="#3-处理文件块write-file-record-1" class="hash-link" aria-label="Direct link to 3-处理文件块write-file-record-1" title="Direct link to 3-处理文件块write-file-record-1">​</a></h4>
 <p>代码在“f030_iap\demo\Core\Src\freertos.c”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image57.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image57-6393d8d1fcf277b0560726ad0fe858fb.png" width="968" height="608" class="img_ev3q"></p>
 <p>“process_file_record”函数在“f030_iap_iap\demo\Core\Src\control.c”，代码如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image58.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image58-c645c7a3188922e4a8686de94d904ca4.png" width="678" height="434" class="img_ev3q"></p>
 <p>对于烧写固件，分为2步：</p>
 <ul>
 <li>得到record_no为0的文件头：记录文件大小、擦除Flash</li>
 <li>得到record_no不为0的文件块：烧录Flash、最后写配置信息</li>
 </ul>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image59.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image59-fbaf5b596d24084e7d0eaa5cb3080f1c.png" width="961" height="769" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="4-中控app要点"><strong>4. 中控APP要点</strong><a href="#4-中控app要点" class="hash-link" aria-label="Direct link to 4-中控app要点" title="Direct link to 4-中控app要点">​</a></h4>
 <p>中控代码为“3_程序源码\01_视频配套的源码\9-4-1_IAP升级上机演示\02_中控程序\h5_iap.7z”。</p>
 <p>升级传感器程序时，上位机发来的命令、文件，通过中控转发给传感器，传感器处理后，再回复中控，中控再回复给上位机。</p>
 <p>整个流程非常长，需要尽快处理！要点有2个：</p>
 <ul>
-<li>中控接收到命令、“Write File Record”时，要马上处理，等待处理结果，返回给上位机</li>
+<li>中控接收到命令、“Write File Record”时，要马上处理，等待处理结果，返回给 上位机</li>
 <li>中控里其他读写传感器的任务，要暂时阻塞</li>
 </ul>
 <p>中控马上处理收到命令、“Write File Record”，代码在“h5_iap\demo\Core\Src\control.c”，而不是交给其他任务来处理（读写一般寄存器时，时让其他任务处理的）。如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image60.png" alt="img" class="img_ev3q"></p>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image60-37ac5e7f4eef60310d09f9b0679b3a94.png" width="1152" height="846" class="img_ev3q"></p>
 <p>怎么阻塞其他任务？代码在“h5_iap\demo\Core\Src\control.c”，如下：</p>
-<p><img loading="lazy" src="http://photos.100ask.net/modbus-docs/project_one/chapter10/image61.png" alt="img" class="img_ev3q"></p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/100askTeam/Modbus-TrainingDocs/tree/main/docs/Modbus-projectOne/chapter10.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_vwxv"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/en/Modbus-projectOne/chapter9"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">第8章 程序升级</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/en/Modbus-projectOne/chapter11"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">第10章 调试心得</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#91-产品框架" class="table-of-contents__link toc-highlight">9.1 产品框架</a><ul><li><a href="#911-硬件框架" class="table-of-contents__link toc-highlight">9.1.1 硬件框架</a></li><li><a href="#912-设计思路" class="table-of-contents__link toc-highlight">9.1.2 设计思路</a></li><li><a href="#913-软件框架" class="table-of-contents__link toc-highlight">9.1.3 软件框架</a></li></ul></li><li><a href="#92-改造libmodbus实现文件传输" class="table-of-contents__link toc-highlight">9.2 改造libmodbus实现文件传输</a><ul><li><a href="#921-分析write-file-record功能" class="table-of-contents__link toc-highlight">9.2.1 分析Write File Record功能</a></li><li><a href="#922-实现write-file-record" class="table-of-contents__link toc-highlight">9.2.2 实现Write File Record</a></li><li><a href="#923-uart驱动严重bug" class="table-of-contents__link toc-highlight">9.2.3 UART驱动严重Bug</a></li><li><a href="#924-实现文件传输" class="table-of-contents__link toc-highlight">9.2.4 实现文件传输</a></li></ul></li><li><a href="#93-读写任意传感器" class="table-of-contents__link toc-highlight">9.3 读写任意传感器</a><ul><li><a href="#931-上机演示" class="table-of-contents__link toc-highlight">9.3.1 上机演示</a></li><li><a href="#932-使用点的映射表操作任意传感器的原理" class="table-of-contents__link toc-highlight">9.3.2 使用“点”的映射表操作任意传感器的原理</a></li><li><a href="#933-中控代码讲解" class="table-of-contents__link toc-highlight">9.3.3 中控代码讲解</a></li></ul></li><li><a href="#94-iap升级" class="table-of-contents__link toc-highlight">9.4 IAP升级</a><ul><li><a href="#941-上机演示" class="table-of-contents__link toc-highlight">9.4.1 上机演示</a></li><li><a href="#942-iap升级的软件设计思路" class="table-of-contents__link toc-highlight">9.4.2 IAP升级的软件设计思路</a></li><li><a href="#943-中控bootloader代码讲解" class="table-of-contents__link toc-highlight">9.4.3 中控Bootloader代码讲解</a></li><li><a href="#944-传感器bootloader代码和中控app代码讲解" class="table-of-contents__link toc-highlight">9.4.4 传感器Bootloader代码和中控APP代码讲解</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://dongshanpi.com" target="_blank" rel="noopener noreferrer" class="footer__link-item">DongshanPI<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://canaan-docs.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Canaan-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://renesas-docs.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Renesas-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://rtos.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">RTOS<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://tina.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">TinaSDK-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://allwinner-docs.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Allwinner-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://aw-r128.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">R128-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://space.bilibili.com/275908810" target="_blank" rel="noopener noreferrer" class="footer__link-item">BiliBili<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://forums.100ask.net" target="_blank" rel="noopener noreferrer" class="footer__link-item">Stack Overflow<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://video.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">VideoCenter<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://twitter.com/dongshanpi" target="_blank" rel="noopener noreferrer" class="footer__link-item">Twitter<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://weidongshan.coding.net/public/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Coding<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/100askTeam" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://gitee.com/weidongshan" target="_blank" rel="noopener noreferrer" class="footer__link-item">Gitee<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2024 100askTeam, Inc. Built with Docusaurus.</div></div></div></footer></div>
+<p><img loading="lazy" alt="img" src="/en/assets/images/image61-8475d294b5bf54df68e897c2e1849c1c.png" width="1078" height="596" class="img_ev3q"></p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/100askTeam/Modbus-TrainingDocs/tree/main/docs/Modbus-projectOne/chapter10.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_vwxv"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/en/Modbus-projectOne/chapter9"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">第8章 程序升级</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/en/Modbus-projectOne/chapter11"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">第10章 调试心得</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#91-产品框架" class="table-of-contents__link toc-highlight">9.1 产品框架</a><ul><li><a href="#911-硬件框架" class="table-of-contents__link toc-highlight">9.1.1 硬件框架</a></li><li><a href="#912-设计思路" class="table-of-contents__link toc-highlight">9.1.2 设计思路</a></li><li><a href="#913-软件框架" class="table-of-contents__link toc-highlight">9.1.3 软件框架</a></li></ul></li><li><a href="#92-改造libmodbus实现文件传输" class="table-of-contents__link toc-highlight">9.2 改造libmodbus实现文件传输</a><ul><li><a href="#921-分析write-file-record功能" class="table-of-contents__link toc-highlight">9.2.1 分析Write File Record功能</a></li><li><a href="#922-实现write-file-record" class="table-of-contents__link toc-highlight">9.2.2 实现Write File Record</a></li><li><a href="#923-uart驱动严重bug" class="table-of-contents__link toc-highlight">9.2.3 UART驱动严重Bug</a></li><li><a href="#924-实现文件传输" class="table-of-contents__link toc-highlight">9.2.4 实现文件传输</a></li></ul></li><li><a href="#93-读写任意传感器" class="table-of-contents__link toc-highlight">9.3 读写任意传感器</a><ul><li><a href="#931-上机演示" class="table-of-contents__link toc-highlight">9.3.1 上机演示</a></li><li><a href="#932-使用点的映射表操作任意传感器的原理" class="table-of-contents__link toc-highlight">9.3.2 使用“点”的映射表操作任意传感器的原理</a></li><li><a href="#933-中控代码讲解" class="table-of-contents__link toc-highlight">9.3.3 中控代码讲解</a></li></ul></li><li><a href="#94-iap升级" class="table-of-contents__link toc-highlight">9.4 IAP升级</a><ul><li><a href="#941-上机演示" class="table-of-contents__link toc-highlight">9.4.1 上机演示</a></li><li><a href="#942-iap升级的软件设计思路" class="table-of-contents__link toc-highlight">9.4.2 IAP升级的软件设计思路</a></li><li><a href="#943-中控bootloader代码讲解" class="table-of-contents__link toc-highlight">9.4.3 中控Bootloader代码讲解</a></li><li><a href="#944-传感器bootloader代码和中控app代码讲解" class="table-of-contents__link toc-highlight">9.4.4 传感器Bootloader代码和中控APP代码讲解</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://dongshanpi.com" target="_blank" rel="noopener noreferrer" class="footer__link-item">DongshanPI<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://canaan-docs.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Canaan-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://renesas-docs.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Renesas-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://rtos.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">RTOS<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://tina.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">TinaSDK-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://allwinner-docs.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Allwinner-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://aw-r128.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">R128-Docs<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://space.bilibili.com/275908810" target="_blank" rel="noopener noreferrer" class="footer__link-item">BiliBili<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://forums.100ask.net" target="_blank" rel="noopener noreferrer" class="footer__link-item">Stack Overflow<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://video.100ask.net/" target="_blank" rel="noopener noreferrer" class="footer__link-item">VideoCenter<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://twitter.com/dongshanpi" target="_blank" rel="noopener noreferrer" class="footer__link-item">Twitter<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://weidongshan.coding.net/public/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Coding<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/100askTeam" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://gitee.com/weidongshan" target="_blank" rel="noopener noreferrer" class="footer__link-item">Gitee<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2024 100askTeam, Inc. Built with Docusaurus.</div></div></div></footer></div>
 </body>
 </html>
