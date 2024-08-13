@@ -43,11 +43,11 @@
 
 **硬件框架如下：**
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter12/image1.png)  
+![img](pic/chapter12/image1.png)  
 
 **软件框图如下：**
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter12/image2.png) 
+![img](pic/chapter12/image2.png) 
 
 **掌握的技能：** 
 
@@ -73,7 +73,7 @@
 - 固定板：接收上位机指令，读取各个传感器状态，跟旋转板通过Modbus通信
 - 旋转板：根据固定板控制球管发出X光，控制探测器
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter12/image3.png) 
+![img](pic/chapter12/image3.png) 
 
 **软件开发的重点：**
 
@@ -86,7 +86,7 @@
 
 在项目开发过程中，我充分体会到了“程序是3分写、7分调”。在反复的调试过程中，对程序的理解更加深刻了。比如libmodbus里有两个超时时间需要仔细考虑（Middlewares\Third_Party\libmodbus\modbus-private.h）：
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter12/image4.png) 
+![img](pic/chapter12/image4.png) 
 
 “_RESPONSE_TIMEOUT”是“等待回应的时间”：client给server发出请求后，client要等待server发出的回应，这个等待时间要设置得比较大，以便server有足够的时间处理数据并发出回应。
 
@@ -100,7 +100,7 @@
 
 以这个职位为例：https://www.zhipin.com/job_detail/4d4373b7fb6a46cb1HN929W0FlJY.html?lid=369XwnNKhGr.search.4&securityId=hRdoXOaeZToeh-W1wB3aY_cPjr9MMcD03tRpzKYjLTnFJl559OsJo5xuP1gc8RuVtpSEzeA6u16PqgXFWoDVCsosQhCZbqNswQfUtAgjM7jmVW1RB9es75HWWuKR1-dEQ_5Z2zo_XQpz&sessionId=
 
-![img](http://photos.100ask.net/modbus-docs/project_one/chapter12/image5.png) 
+![img](pic/chapter12/image5.png) 
 
 本人有x年嵌入式软件开发经验，非常匹配这个岗位的需求：
 
